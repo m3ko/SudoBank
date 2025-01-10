@@ -8,6 +8,7 @@ class TripulantesController extends Controller
 {
     public function store(){
         /*INSTERT*/ 
+        /*Aimar */
     }
 
     public function  update {
