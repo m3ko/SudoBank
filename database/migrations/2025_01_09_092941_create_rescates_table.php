@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rescates', function (Blueprint $table) {
-            $table->id();
+            $table->id("id_rescate");
+            $table->string("id_viajes");
+            $table->datetime("fecha_hora_inicio");
+            $table->datetime("fecha_hora_fin");
             $table->timestamps();
         });
     }
