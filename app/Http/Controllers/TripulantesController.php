@@ -16,7 +16,7 @@ class TripulantesController extends Controller
 
     public function destroy {
         /*DELETE*/
-
+        /*Niko*/
     }
 
     public function create {
