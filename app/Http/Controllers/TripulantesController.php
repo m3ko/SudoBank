@@ -18,7 +18,7 @@ class TripulantesController extends Controller
     public function destroy($id) {
         /*DELETE*/
         /*Niko*/
-        $tripulante = Tripulante::find($id);
+        $tripulante = tripulantes::find($id);
         $tripulante->delete();
 
         return redirect()->route('tripulantes.index')
