@@ -9,7 +9,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::update('/tripulante', [TripulanteController::class, 'update'])->name('tripulante.update');
+Route::update('/tripulantes/{tripulante}', [TripulanteController::class, 'update'])->name('tripulante.update');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
