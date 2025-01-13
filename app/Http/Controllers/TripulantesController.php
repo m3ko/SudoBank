@@ -34,7 +34,6 @@ class TripulantesController extends Controller
         /*Niko*/
         $tripulante = tripulantes::find($id);
         $tripulante->delete();
-        $tripulante->store();
 
         return redirect()->route('tripulantes.index')
         ->with('succes', 'Post deleted succesfully');
