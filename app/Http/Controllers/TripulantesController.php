@@ -14,6 +14,7 @@ class TripulantesController extends Controller
         /*janire */
 
     }
+    
 
     public function destroy {
         /*DELETE*/
