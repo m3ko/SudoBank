@@ -39,7 +39,7 @@ class TripulantesController extends Controller
     }
 
     public function create {
-        /*CREATE */
+        /*comentario hola */
 
     }
 
