@@ -11,6 +11,7 @@ class TripulantesController extends Controller
     }
 
     public function  update {
+       
 
     }
 
