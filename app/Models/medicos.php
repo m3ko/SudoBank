@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class medicos extends Model
 {
-    //
+    protected $fillable = [
+        'nombre',
+        'apellido',
+        'fecha_incorporacion',
+        'fecha_baja'
+    ];
+    public function viajes(): BelongsToMany{
+        return $this->belongsToMany(viajes::class);
+    }
 }
