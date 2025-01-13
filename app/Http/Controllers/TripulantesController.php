@@ -15,13 +15,19 @@ class TripulantesController extends Controller
 
     }
 
-    public function destroy {
+    public function destroy($id) {
         /*DELETE*/
         /*Niko*/
+        $tripulante = Tripulante::find($id);
+        $tripulante->delete();
+
+        return redirect()->route('tripulantes.index')
+        ->with('succes', 'Post deleted succesfully');
     }
 
     public function create {
         /*CREATE */
+
     }
 
 
