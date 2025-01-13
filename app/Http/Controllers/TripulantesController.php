@@ -26,7 +26,7 @@ class TripulantesController extends Controller
 
     public function  update {
        
-        $tripulante = new tripulante;
+       
     }
 
     public function destroy($id) {
