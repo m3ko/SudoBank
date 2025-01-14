@@ -31,8 +31,8 @@
                     <td>{{ $tripulante->fecha_incorporacion }}</td>
                     <td>{{ $tripulante->fecha_baja }}</td>
                     <td>
-                        <a href="{{ route('tripulantes.edit', $tripulante->id) }}">Editar</a>
-                        {{-- <form action="{{ route('tripulantes.destroy', $tripulante->id) }}" method="POST" style="display:inline;"> --}}
+                        <a href="{{ route('tripulantes.update', $tripulante->id) }}">Editar</a>
+                        <form action="{{ route('tripulantes.destroy', $tripulante->id) }}" method="POST" style="display:inline;"> 
                             @csrf
                             @method('DELETE')
                             <button type="submit">Eliminar</button>
@@ -40,8 +40,13 @@
                     </td>
                 </tr>
             @endforeach
+            
         </tbody>
     </table>
+    <form action="{{ route('tripulantes.create') }}" style="display:inline;"> 
+        
+        <button type="submit">Añadir Nuevo</button>
+    </form>
 
 </body>
 </html>

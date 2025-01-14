@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tripulantes;
+use Illuminate\Http\RedirectResponse;
 
 class TripulantesController extends Controller
 {
@@ -16,23 +17,22 @@ class TripulantesController extends Controller
     // }
 
 
-    // public function store(Request $request): RedirectResponse
-    // {
+    public function store(Request $request): RedirectResponse
+    {
         
  
-    //     $tripulante = new Tripulantes;
+        $tripulante = new Tripulantes;
  
-    //     $tripulante->nombre = $request->nombre;
-    //     $tripulante->apellido = $request->apellido;
-    //     $tripulante->rol = $request->rol;
-    //     $tripulante->fecha_incorporacion = $request->fecha_incorporacion;
-
+        $tripulante->nombre = $request->nombre;
+        $tripulante->apellido = $request->apellido;
+        $tripulante->rol = $request->rol;
+        $tripulante->fecha_incorporacion = $request->fecha_incorporacion;
+        
  
-    //     $tripulante->save();
+        $tripulante->save();
  
-    //     return redirect()->route('tripulantes.index')
-    //     ->with('succes', 'Post deleted succesfully');
-    // }
+        return redirect()->route('tripulantes.index')->with('success', 'Tripulante creado correctamente');
+    }
 
     // // public function  update (Request $request, $id) {
     // //     /*janire */
@@ -69,15 +69,20 @@ class TripulantesController extends Controller
          // Pasar los tripulantes a la vista 'tripulantes.index'
          return view('tripulantes.index', compact('tripulantes'));
      }
+     public function create()
+     {
+ 
+         return view('tripulantes.create');
+     }
  
      // Crear un nuevo tripulante
-     public function store(Request $request)
-     {
-         // Validar y crear el tripulante
-         Tripulantes::create($request->all());
+    //  public function store(Request $request)
+    //  {
+    //      // Validar y crear el tripulante
+    //      Tripulantes::create($request->all());
  
-         return redirect()->route('tripulantes.index')->with('success', 'Tripulante creado correctamente');
-     }
+    //      return redirect()->route('tripulantes.index')->with('success', 'Tripulante creado correctamente');
+    //  }
  
      // Actualizar un tripulante
      public function update(Request $request, Tripulantes $tripulante)

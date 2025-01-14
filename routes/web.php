@@ -9,9 +9,10 @@ Route::get('/', function () {
 });
 
 Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripulantes.index');
+Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->name('tripulantes.create');
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
-// Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
-Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
+Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
+// Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
 
 Route::put('/tripulante/{tripulante}', [TripulanteController::class, '@update'])->name('tripulantes.update');
 
