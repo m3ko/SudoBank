@@ -3,13 +3,17 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+
+//Route::store('/tripulantes', TripulantesController::class .'@store')->name('tripulante.store');
+
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulante.destroy');
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::update('/tripulante', [TripulanteController::class, 'update'])->name('tripulante.update');
+//Route::update('/tripulante', [TripulanteController::class, 'update'])->name('tripulante.update');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
