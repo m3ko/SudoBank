@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class tripulantes extends Model
+class Tripulantes extends Model
 {
     protected $fillable = [
         'nombre',
         'apellido',
         'rol',
         'fecha_incorporacion',
-        'fecha_baja' => ['nullable']
+        'fecha_baja'
     ];
 
     public function viajes(): BelongsToMany{
-        return $this->belongsToMany(viajes::class);
+        return $this->belongsToMany(Viajes::class);
     }
 }

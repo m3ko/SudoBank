@@ -4,14 +4,16 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TripulantesController;
 
-Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulante.destroy');
-Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripulante.index');
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::put('/tripulante/{tripulante}', [TripulanteController::class, '@update'])->name('tripulante.update');
+Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripulantes.index');
+Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
+// Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
+Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
+
+Route::put('/tripulante/{tripulante}', [TripulanteController::class, '@update'])->name('tripulantes.update');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
