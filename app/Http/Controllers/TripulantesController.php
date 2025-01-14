@@ -3,52 +3,63 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\tripulantes;
+use App\Models\tripulantes;
 
 class TripulantesController extends Controller
 {
-    public function store(Request $request): RedirectResponse
-    {
+
+    public function index(){
+      
+        $tripulantes = tripulantes::all(); // Convertir a arreglo
+    // Aquí puedes manipular los datos como un arreglo si es necesario
+        return $tripulantes;
+        
+
+    }
+
+
+    // public function store(Request $request): RedirectResponse
+    // {
         
  
-        $tripulante = new tripulante;
+    //     $tripulante = new tripulante;
  
-        $tripulante->nombre = $request->nombre;
-        $tripulante->apellido = $request->apellido;
-        $tripulante->rol = $request->rol;
-        $tripulante->fecha_incorporacion = $request->fecha_incorporacion;
+    //     $tripulante->nombre = $request->nombre;
+    //     $tripulante->apellido = $request->apellido;
+    //     $tripulante->rol = $request->rol;
+    //     $tripulante->fecha_incorporacion = $request->fecha_incorporacion;
 
  
-        $tripulante->save();
+    //     $tripulante->save();
  
-        return redirect('/tripulantes');
-    }
+    //     return redirect('/tripulantes');
+    // }
 
     public function  update (Request $request, $id) {
         /*janire */
-        $request->validate([
-            'nombre'])
-        $tripulante = Tripulante::($id);
-        $tripulante->update($request->all());
-        return redirect()->route('tripulantes.index')
-        ->with('success', 'Post updated succesfully');
+        // $request->validate([
+        //     'nombre'])
+        // $tripulante = Tripulante::($id);
+        // $tripulante->update($request->all());
+        // return redirect()->route('tripulantes.index')
+        // ->with('success', 'Post updated succesfully');
     }
     
 
-    public function destroy($id) {
-        /*DELETE*/
-        /*Niko*/
-        $tripulante = tripulantes::find($id);
-        $tripulante->delete();
+    // public function destroy($id) {
+    //     /*DELETE*/
+    //     /*Niko*/
+    //     $tripulante = tripulantes::find($id);
+    //     $tripulante->delete();
 
-        return redirect()->route('tripulantes.index')
-        ->with('succes', 'Post deleted succesfully');
-    }
+    //     return redirect()->route('tripulantes.index')
+    //     ->with('succes', 'Post deleted succesfully');
+    // }
 
-    public function create {
-        /*comentario hola */
+    // public function create {
+    //     /*comentario hola */
 
-    }
+    // }
 
 
 

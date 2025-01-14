@@ -2,14 +2,16 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TripulantesController;
 
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulante.destroy');
+Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripulante.index');
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::update('/tripulante', [TripulanteController::class, 'update'])->name('tripulante.update');
+Route::put('/tripulante/{tripulante}', [TripulanteController::class, '@update'])->name('tripulante.update');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

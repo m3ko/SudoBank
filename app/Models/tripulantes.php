@@ -11,7 +11,7 @@ class tripulantes extends Model
         'apellido',
         'rol',
         'fecha_incorporacion',
-        'fecha_baja'
+        'fecha_baja' => ['nullable']
     ];
 
     public function viajes(): BelongsToMany{
