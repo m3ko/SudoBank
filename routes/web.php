@@ -13,9 +13,9 @@ Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->nam
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
 // Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
-//Route::update('/triulantes/{tripulante}', TripulantesController::class . 'update')->name('tripulantes.update')
 
-Route::put('/tripulante/{tripulante}', [TripulanteController::class, 'update'])->name('tripulantes.update');
+Route::put('/tripulante/{tripulante}', [TripulantesController::class, 'update'])->name('tripulantes.update');
+Route::get('/tripulantes/{tripulante}/edit', [TripulantesController::class, 'edit'])->name('tripulantes.edit');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -37,20 +37,26 @@ class TripulantesController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|max:255',
-            'apellidos' => 'required',
-            'rol',
+            'nombre',
+            'apellidos',
+            'rol' ,
             'fecha_incorporacion',
             'fecha_baja',
             'created_at',
             'updated_at',
         ]);
 
-        $tripulante = Post::find($id);
+        //Buscar registro en la BBDD
+        $tripulante = Tripulantes::find($id);
         $tripulante->update($request->all());
 
         return redirect()->route('tripulantes.index')
             ->with('success', 'Post updated successfully.');
+    }
+
+    public function edit($id) {
+        $tripulante = Tripulantes::find($id);
+        return view('tripulantes.edit', compact('tripulante'));
     }
     
 
