@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("nombre");
             $table->string("apellido");
-            $table->date("fecha_incorp");
+            $table->date("fecha_incorporacion");
             $table->date("fecha_baja");
             $table->timestamps();
         });
