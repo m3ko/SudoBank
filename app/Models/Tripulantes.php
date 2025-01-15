@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class tripulantes extends Model
+class Tripulantes extends Model
 {
     protected $fillable = [
         'nombre',
@@ -15,6 +15,6 @@ class tripulantes extends Model
     ];
 
     public function viajes(): BelongsToMany{
-        return $this->belongsToMany(viajes::class);
+        return $this->belongsToMany(Viajes::class);
     }
 }
