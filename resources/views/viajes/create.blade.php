@@ -7,18 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('tripulantes.store')}}" method="post">
+    <form action="{{ route('viajes.store')}}" method="post">
         @csrf
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre"><br><br>
-        <label for="apelldio">Apellido:</label>
-        <input type="text" id="apellido" name="apellido"><br><br>
-        <label for="rol">Rol:</label>
-        <input type="text" id="rol" name="rol"><br><br>
-        <label for="fecha_incorporacion">Fecha Incorporación:</label>
-        <input type="date" id="fecha_incorporacion" name="fecha_incorporacion"><br><br>
-        <label for="fecha_baja">Fecha Baja:</label>
-        <input type="date" id="fecha_baja" name="fecha_baja"><br><br>
+        <label for="origen">Origen:</label>
+        <input type="text" id="origen" name="origen"><br><br>
+        <label for="destino">Destino:</label>
+        <input type="text" id="destino" name="destino"><br><br>
+        <label for="fechaHora">Fecha:</label>
+        <input type="date" id="fechaHora" name="fechaHora"><br><br>
         <input type="submit" value="Añadir">
       </form> 
 </body>

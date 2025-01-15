@@ -15,7 +15,6 @@
                 <th>ID</th>
                 <th>Origen</th>
                 <th>Destino</th>
-                <th>Rol</th>
                 <th>Fecha</th>
             </tr>
         </thead>
@@ -25,7 +24,6 @@
                     <td>{{ $viaje->id }}</td>
                     <td>{{ $viaje->origen }}</td>
                     <td>{{ $viaje->destino }}</td>
-                    <td>{{ $viaje->rol }}</td>
                     <td>{{ $viaje->fechaHora }}</td>
                     <td>
                         <a href="{{ route('viajes.update', $viaje->id) }}">Editar</a>
@@ -45,5 +43,5 @@
         <button type="submit">Añadir Nuevo</button>
     </form>
 
-</body>
+</body>+
 </html>
