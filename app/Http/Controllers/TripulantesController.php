@@ -34,15 +34,24 @@ class TripulantesController extends Controller
         return redirect()->route('tripulantes.index')->with('success', 'Tripulante creado correctamente');
     }
 
-    // // public function  update (Request $request, $id) {
-    // //     /*janire */
-    // //     $request->validate([
-    // //         'nombre'])
-    // //     $tripulante = Tripulantes::($id);
-    // //     $tripulante->update($request->all());
-    // //     return redirect()->route('tripulantes.index')
-    // //     ->with('success', 'Post updated succesfully');
-    // // }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nombre' => 'required|max:255',
+            'apellidos' => 'required',
+            'rol',
+            'fecha_incorporacion',
+            'fecha_baja',
+            'created_at',
+            'updated_at',
+        ]);
+
+        $tripulante = Post::find($id);
+        $tripulante->update($request->all());
+
+        return redirect()->route('tripulantes.index')
+            ->with('success', 'Post updated successfully.');
+    }
     
 
     // public function destroy($id) {
@@ -85,12 +94,12 @@ class TripulantesController extends Controller
     //  }
  
      // Actualizar un tripulante
-     public function update(Request $request, Tripulantes $tripulante)
-     {
-         $tripulante->update($request->all());
+    //  public function update(Request $request, Tripulantes $tripulante)
+    //  {
+    //      $tripulante->update($request->all());
  
-         return redirect()->route('tripulantes.index')->with('success', 'Tripulante actualizado correctamente');
-     }
+    //      return redirect()->route('tripulantes.index')->with('success', 'Tripulante actualizado correctamente');
+    //  }
  
      // Eliminar un tripulante
      public function destroy(Tripulantes $tripulante)
