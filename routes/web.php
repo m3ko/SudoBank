@@ -27,7 +27,7 @@ Route::delete('/medicos/{medico}', MedicosController::class .'@destroy')->name('
 // Route::delete('/medicos/{medico}', [MedicosController::class, 'destroy'])->name('medicos.destroy');
 
 Route::put('/medicos/{medico}', [MedicosController::class, '@update'])->name('medicos.update');
-
+Route::get('/tripulantes/{medico}/edit', [MedicossController::class, 'edit'])->name('medicos.edit');
 
 
 Route::get('/dashboard', function () {
