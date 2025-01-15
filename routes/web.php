@@ -13,6 +13,7 @@ Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->nam
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
 // Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
+Route::get('/tripulantes/show/{tripulante}', TripulantesController::class . '@show')->name('tripulantes.show');
 
 Route::put('/tripulante/{tripulante}', [TripulanteController::class, '@update'])->name('tripulantes.update');
 

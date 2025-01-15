@@ -101,4 +101,9 @@ class TripulantesController extends Controller
      }
 
 
+     public function show($id) {
+        $tripulante = Tripulantes::find($id);
+        return view('tripulantes.show', compact('tripulante'));
+     }
+
 }
