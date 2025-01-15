@@ -27,7 +27,8 @@ class TripulantesController extends Controller
         $tripulante->apellido = $request->apellido;
         $tripulante->rol = $request->rol;
         $tripulante->fecha_incorporacion = $request->fecha_incorporacion;
-        
+        $tripulante->fecha_baja = $request->fecha_baja;
+
  
         $tripulante->save();
  
