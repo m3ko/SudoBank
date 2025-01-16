@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Tripulantes;
 use App\Models\Medicos;
+use App\Models\Viajes;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -35,6 +36,11 @@ class DatabaseSeeder extends Seeder
             'apellido' => 'Alberto',
             'fecha_incorporacion' => '2024/12/12',
             'fecha_baja' => '2024/12/12'
+        ]);
+        Viajes::create([
+            'origen'=>'España',
+            'destino'=>'Tanzania',
+            'fechaHora'=>'2022/02/02'
         ]);
 
 
