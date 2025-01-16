@@ -10,7 +10,6 @@ class Viajes extends Model
     protected $fillable = [
         'origen',
         'destino',
-        'rol',
         'fechaHora'
     ];
     public function tripulantes(): BelongsToMany{
