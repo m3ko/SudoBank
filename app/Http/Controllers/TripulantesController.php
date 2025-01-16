@@ -9,13 +9,15 @@ use Illuminate\Http\RedirectResponse;
 class TripulantesController extends Controller
 {
 
-    // public function index(){
+     // Mostrar todos los tripulantes
+    public function index()
+    {
+        // Obtener todos los tripulantes de la base de datos
+        $tripulantes = Tripulantes::all();
 
-    //     $tripulantes = Tripulantes::all();
-    //     return view('tripulantes.index', compact('tripulantes'));
-        
-    // }
-
+        // Pasar los tripulantes a la vista 'tripulantes.index'
+        return view('tripulantes.index', compact('tripulantes'));
+    }
 
     public function store(Request $request): RedirectResponse
     {
@@ -63,6 +65,52 @@ class TripulantesController extends Controller
         return view('tripulantes.edit', compact('tripulante'));
     }
     
+
+     public function create()
+     {
+ 
+         return view('tripulantes.create');
+     }
+ 
+    
+     // Actualizar un tripulante
+     public function  update (Request $request, $id) {
+        $request->validate([
+            'nombre'])
+        $tripulante = Tripulante::($id);
+        $tripulante->update($request->all());
+        return redirect()->route('tripulantes.index')
+        ->with('success', 'Post updated succesfully');
+    }
+
+
+     public function create()
+     {
+ 
+         return view('tripulantes.create');
+     }
+ 
+    
+     // Actualizar un tripulante
+     public function  update (Request $request, $id) {
+        $request->validate([
+            'nombre'])
+        $tripulante = Tripulante::($id);
+        $tripulante->update($request->all());
+        return redirect()->route('tripulantes.index')
+        ->with('success', 'Post updated succesfully');
+    }
+
+      // // public function  update (Request $request, $id) {
+    // //     /*janire */
+    // //     $request->validate([
+    // //         'nombre'])
+    // //     $tripulante = Tripulantes::($id);
+    // //     $tripulante->update($request->all());
+    // //     return redirect()->route('tripulantes.index')
+    // //     ->with('success', 'Post updated succesfully');
+    // // }
+
 
     // public function destroy($id) {
     //     /*DELETE*/
