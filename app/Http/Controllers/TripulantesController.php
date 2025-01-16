@@ -37,9 +37,9 @@ class TripulantesController extends Controller
         return redirect()->route('tripulantes.index')->with('success', 'Tripulante creado correctamente');
     }
 
+    //Actualizar los datos
     public function update(Request $request, $id)
     {
-        //Se validan los datos enviados al form
         $request->validate([
             'nombre',
             'apellidos',
@@ -58,10 +58,11 @@ class TripulantesController extends Controller
             ->with('success', 'Post updated successfully.');
     }
 
+    //Editar los datos en el formulario
     public function edit($id) {
+        //Obtener todos los tripulantes de la BBDD
         $tripulante = Tripulantes::find($id);
-        //Devuelve la vista tripulante. Compact: Crea un array con los datos de 
-        //tripulante y los pasa a la vista para mostrarlos en el form a editar
+        //Pasar los tripulantes a la vista
         return view('tripulantes.edit', compact('tripulante'));
     }
     
@@ -71,45 +72,7 @@ class TripulantesController extends Controller
  
          return view('tripulantes.create');
      }
- 
-    
-     // Actualizar un tripulante
-     public function  update (Request $request, $id) {
-        $request->validate([
-            'nombre'])
-        $tripulante = Tripulante::($id);
-        $tripulante->update($request->all());
-        return redirect()->route('tripulantes.index')
-        ->with('success', 'Post updated succesfully');
-    }
 
-
-     public function create()
-     {
- 
-         return view('tripulantes.create');
-     }
- 
-    
-     // Actualizar un tripulante
-     public function  update (Request $request, $id) {
-        $request->validate([
-            'nombre'])
-        $tripulante = Tripulante::($id);
-        $tripulante->update($request->all());
-        return redirect()->route('tripulantes.index')
-        ->with('success', 'Post updated succesfully');
-    }
-
-      // // public function  update (Request $request, $id) {
-    // //     /*janire */
-    // //     $request->validate([
-    // //         'nombre'])
-    // //     $tripulante = Tripulantes::($id);
-    // //     $tripulante->update($request->all());
-    // //     return redirect()->route('tripulantes.index')
-    // //     ->with('success', 'Post updated succesfully');
-    // // }
 
 
     // public function destroy($id) {
@@ -127,20 +90,6 @@ class TripulantesController extends Controller
 
     // }
 
-     // Mostrar todos los tripulantes
-     public function index()
-     {
-         // Obtener todos los tripulantes de la base de datos
-         $tripulantes = Tripulantes::all();
- 
-         // Pasar los tripulantes a la vista 'tripulantes.index'
-         return view('tripulantes.index', compact('tripulantes'));
-     }
-     public function create()
-     {
- 
-         return view('tripulantes.create');
-     }
  
      // Crear un nuevo tripulante
     //  public function store(Request $request)
