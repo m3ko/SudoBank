@@ -25,14 +25,12 @@ Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('trip
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
 Route::put('/tripulante/{tripulante}', [TripulanteController::class, 'update'])->name('tripulantes.update');
 
-Route::get('/viajes', ViajesController::class .'@index')->name('viajes.index');
 Route::get('/viajes/añadir', ViajesController::class .'@create')->name('viajes.create');
 Route::post('/viajes', [ViajesController::class, 'store'])->name('viajes.store');
 Route::delete('/viajes/{viaje}', ViajesController::class .'@destroy')->name('viajes.destroy');
 Route::put('/viaje/{viaje}', [ViajesController::class, 'update'])->name('viajes.update');
 
 //Rutas Medicos
-Route::get('/medicos', MedicosController::class .'@index')->name('medicos.index');
 Route::get('/medicos/añadir', MedicosController::class .'@create')->name('medicos.create');
 Route::post('/medicos', [MedicosController::class, 'store'])->name('medicos.store');
 Route::delete('/medicos/{medico}', MedicosController::class .'@destroy')->name('medicos.destroy');
@@ -46,6 +44,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/viajes', ViajesController::class .'@index')->name('viajes.index');
+    Route::get('/medicos', MedicosController::class .'@index')->name('medicos.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
