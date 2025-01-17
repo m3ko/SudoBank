@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tripulantes;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
 
 class TripulantesController extends Controller
 {
 
-     // Mostrar todos los tripulantes
+     
+    public function __construct()
+    {
+        // Aplicar el middleware para asegurarse de que solo los administradores puedan acceder a las acciones
+        $this->middleware('role:editor')->only(['store', 'update', 'edit', 'destroy']);
+    }
+    // Mostrar todos los tripulantes
     public function index()
     {
         // Obtener todos los tripulantes de la base de datos
@@ -72,7 +79,7 @@ class TripulantesController extends Controller
         //Pasar los tripulantes a la vista
         return view('tripulantes.edit', compact('tripulante'));
     }else{
-        abort(403);
+        abort(403); // Si no tiene permiso, mostrar un error 403
     }}
     
 

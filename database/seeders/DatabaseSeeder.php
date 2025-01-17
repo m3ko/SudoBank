@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         Viajes::create([
             'origen'=>'España',
             'destino'=>'Tanzania',
-            'fechaHora'=>'2022/02/02'
+            'fecha_hora'=>'2022/02/02'
         ]);
 
 
