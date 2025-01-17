@@ -23,8 +23,6 @@ Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripul
 Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->name('tripulantes.create');
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
-<<<<<<< HEAD
-=======
 Route::put('/tripulante/{tripulante}', [TripulanteController::class, 'update'])->name('tripulantes.update');
 
 Route::get('/tripulantes/show/{tripulante}', TripulantesController::class . '@show')->name('tripulantes.show');
@@ -41,7 +39,6 @@ Route::delete('/medicos/{medico}', MedicosController::class .'@destroy')->name('
 // Route::delete('/medicos/{medico}', [MedicosController::class, 'destroy'])->name('medicos.destroy');
 
 Route::put('/medicos/{medico}', [MedicosController::class, '@update'])->name('medicos.update');
->>>>>>> master
 
 
 Route::get('/dashboard', function () {
