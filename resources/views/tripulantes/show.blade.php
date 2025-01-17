@@ -15,6 +15,7 @@
         <li>{{ $tripulante->rol }} </li>
         <li>{{ $tripulante->fecha_incorporacion }} </li>
         <li>{{ $tripulante->fecha_baja }} </li>
+        <?php print_r($tripulante); ?>
     </ul>
 </body>
 </html>
