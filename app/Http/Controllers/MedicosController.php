@@ -38,7 +38,6 @@ class MedicosController extends Controller
   
          $medico->nombre = $request->nombre;
          $medico->apellido = $request->apellido;
-         $medico->rol = $request->rol;
          $medico->fecha_incorporacion = $request->fecha_incorporacion;
          $medico->fecha_baja = $request->fecha_baja;
   
@@ -59,7 +58,6 @@ class MedicosController extends Controller
         $request->validate([
             'nombre',
             'apellidos',
-            'rol' ,
             'fecha_incorporacion',
             'fecha_baja',
             'created_at',

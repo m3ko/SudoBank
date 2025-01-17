@@ -19,7 +19,6 @@ Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripul
 Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->name('tripulantes.create');
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
-// Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
 Route::put('/tripulantes/{tripulante}', [TripulantesController::class, 'update'])->name('tripulantes.update');
 Route::get('/tripulantes/{tripulante}/edit', [TripulantesController::class, 'edit'])->name('tripulantes.edit');
 
