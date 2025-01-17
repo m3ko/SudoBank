@@ -63,7 +63,7 @@ class TripulantesController extends Controller
         //Obtener todos los tripulantes de la BBDD
         $tripulante = Tripulantes::find($id);
         //Pasar los tripulantes a la vista
-        return view('tripulantes.edit', compact('tripulante'));
+        return view('tripulantes.edit', compact('tripulantes'));
     }
     
 

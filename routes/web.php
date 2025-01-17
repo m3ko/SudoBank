@@ -12,7 +12,6 @@ use App\Http\Controllers\MedicosController;
 
 //Route::store('/tripulantes', TripulantesController::class .'@store')->name('tripulante.store');
 
-Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulante.destroy');
 
 Route::get('/', function () {
     return view('welcome');
