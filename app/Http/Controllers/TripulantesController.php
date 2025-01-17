@@ -49,7 +49,7 @@ class TripulantesController extends Controller
      public function  update (Request $request, $id) {
         $request->validate([
             'nombre'])
-        $tripulante = Tripulante::($id);
+        $tripulante = Tripulantes::($id);
         $tripulante->update($request->all());
         return redirect()->route('tripulantes.index')
         ->with('success', 'Post updated succesfully');
