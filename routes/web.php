@@ -24,13 +24,15 @@ Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->nam
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
 // Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
+Route::put('/tripulante/{tripulante}', [TripulantesController::class, 'update'])->name('tripulantes.update');
+Route::get('/tripulantes/{tripulante}/edit', [TripulantesController::class, 'edit'])->name('tripulantes.edit');
 
+//Rutas viajes
 Route::get('/viajes/añadir', ViajesController::class .'@create')->name('viajes.create');
 Route::post('/viajes', [ViajesController::class, 'store'])->name('viajes.store');
 Route::delete('/viajes/{viaje}', ViajesController::class .'@destroy')->name('viajes.destroy');
 Route::put('/viaje/{viaje}', [ViajesController::class, 'update'])->name('viajes.update');
-Route::put('/tripulante/{tripulante}', [TripulantesController::class, 'update'])->name('tripulantes.update');
-Route::get('/tripulantes/{tripulante}/edit', [TripulantesController::class, 'edit'])->name('tripulantes.edit');
+Route::get('/viaje/{viaje}/edit', [ViajesController::class, 'edit'])->name('viajes.edit');
 
 //Rutas Medicos
 Route::get('/medicos/añadir', MedicosController::class .'@create')->name('medicos.create');
