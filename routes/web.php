@@ -10,6 +10,7 @@ use App\Http\Controllers\MedicosController;
 
 //Route::store('/tripulantes', TripulantesController::class .'@store')->name('tripulante.store');
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -19,8 +20,11 @@ Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripul
 Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->name('tripulantes.create');
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
+// Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
 Route::put('/tripulantes/{tripulante}', [TripulantesController::class, 'update'])->name('tripulantes.update');
 Route::get('/tripulantes/{tripulante}/edit', [TripulantesController::class, 'edit'])->name('tripulantes.edit');
+
+Route::get('/tripulantes/show/{tripulante}', TripulantesController::class . '@show')->name('tripulantes.show');
 
 //Rutas viajes
 Route::get('/viajes/añadir', ViajesController::class .'@create')->name('viajes.create');

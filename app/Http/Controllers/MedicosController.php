@@ -58,6 +58,7 @@ class MedicosController extends Controller
         $request->validate([
             'nombre',
             'apellidos',
+            'rol' ,
             'fecha_incorporacion',
             'fecha_baja',
             'created_at',
