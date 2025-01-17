@@ -29,8 +29,11 @@
                     <td>{{ $medico->fecha_incorporacion }}</td>
                     <td>{{ $medico->fecha_baja }}</td>
                     <td>
-                        <a href="{{ route('medicos.update', $medico->id) }}">Editar</a>
+                        <a href="{{ route('medicos.edit', $medico->id) }}">Editar</a>
+                        <a href="{{ route('medicos.show', $medico->id) }}">Seleccionar</a>
+
                         <form action="{{ route('medicos.destroy', $medico->id) }}" method="POST" style="display:inline;"> 
+                        
                             @csrf
                             @method('DELETE')
                             <button type="submit">Eliminar</button>

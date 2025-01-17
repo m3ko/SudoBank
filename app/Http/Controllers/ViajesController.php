@@ -82,5 +82,8 @@ class ViajesController extends Controller
          return view('viajes.edit', compact('viaje'));
      }
 
-
+     public function show($id) {
+        $viaje = Viajes::find($id);
+        return view('viajes.show', compact('viaje'));
+     }
 }

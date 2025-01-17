@@ -30,8 +30,9 @@ Route::get('/tripulantes/show/{tripulante}', TripulantesController::class . '@sh
 Route::get('/viajes/añadir', ViajesController::class .'@create')->name('viajes.create');
 Route::post('/viajes', [ViajesController::class, 'store'])->name('viajes.store');
 Route::delete('/viajes/{viaje}', ViajesController::class .'@destroy')->name('viajes.destroy');
-Route::put('/viaje/{viaje}', [ViajesController::class, 'update'])->name('viajes.update');
-Route::get('/viaje/{viaje}/edit', [ViajesController::class, 'edit'])->name('viajes.edit');
+Route::put('/viajes/{viaje}', [ViajesController::class, 'update'])->name('viajes.update');
+Route::get('/viajes/{viaje}/edit', [ViajesController::class, 'edit'])->name('viajes.edit');
+Route::get('/viajes/show/{viaje}', ViajesController::class .'@show')->name('viajes.show');
 
 //Rutas Medicos
 Route::get('/medicos/añadir', MedicosController::class .'@create')->name('medicos.create');
@@ -41,6 +42,7 @@ Route::delete('/medicos/{medico}', MedicosController::class .'@destroy')->name('
 
 Route::put('/medicos/{medico}', [MedicosController::class, 'update'])->name('medicos.update');
 Route::get('/medicos/{medico}/edit', [MedicosController::class, 'edit'])->name('medicos.edit');
+Route::get('/medicos/show/{medico}', MedicosController::class .'@show')->name('medicos.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

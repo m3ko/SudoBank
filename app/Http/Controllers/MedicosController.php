@@ -58,11 +58,10 @@ class MedicosController extends Controller
         $request->validate([
             'nombre',
             'apellidos',
-            'rol' ,
             'fecha_incorporacion',
             'fecha_baja',
             'created_at',
-            'updated_at',
+            'updated_at'
         ]);
 
         //Buscar registro en la BBDD
@@ -70,14 +69,17 @@ class MedicosController extends Controller
         $medico->update($request->all());
 
         return redirect()->route('medicos.index')
-            ->with('success', 'Post updated successfully.');
+        ->with('success', 'Post updated successfully.');
     }
 
-    public function edit($id) {
+    public function edit(Request $request,$id) {
         $medico = Medicos::find($id);
         //Devuelve la vista medico. Compact: Crea un array con los datos de 
         //medico y los pasa a la vista para mostrarlos en el form a editar
         return view('medicos.edit', compact('medico'));
     }
-
+    public function show($id) {
+        $medico = Medicos::find($id);
+        return view('medicos.show', compact('medico'));
+     }
 }

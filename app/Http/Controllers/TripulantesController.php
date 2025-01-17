@@ -47,7 +47,7 @@ class TripulantesController extends Controller
             'fecha_incorporacion',
             'fecha_baja',
             'created_at',
-            'updated_at',
+            'updated_at'
         ]);
 
         //Buscar registro en la BBDD
@@ -55,15 +55,15 @@ class TripulantesController extends Controller
         $tripulante->update($request->all());
 
         return redirect()->route('tripulantes.index')
-            ->with('success', 'Post updated successfully.');
+        ->with('success', 'Post updated successfully.');
     }
 
     //Editar los datos en el formulario
-    public function edit($id) {
+    public function edit(Request $request,$id) {
         //Obtener todos los tripulantes de la BBDD
         $tripulante = Tripulantes::find($id);
         //Pasar los tripulantes a la vista
-        return view('tripulantes.edit', compact('tripulantes'));
+        return view('tripulantes.edit', compact('tripulante'));
     }
     
 
