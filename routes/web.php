@@ -4,8 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TripulantesController;
 use App\Http\Controllers\ViajesController;
-use App\Http\Controllers\ProbaController;
 use App\Http\Controllers\MedicosController;
+
 
 
 
@@ -34,7 +34,6 @@ Route::delete('/viajes/{viaje}', ViajesController::class .'@destroy')->name('via
 Route::put('/viaje/{viaje}', [ViajesController::class, 'update'])->name('viajes.update');
 
 //Rutas Medicos
-Route::get('/medicos', MedicosController::class .'@index')->name('medicos.index');
 Route::get('/medicos/añadir', MedicosController::class .'@create')->name('medicos.create');
 Route::post('/medicos', [MedicosController::class, 'store'])->name('medicos.store');
 Route::delete('/medicos/{medico}', MedicosController::class .'@destroy')->name('medicos.destroy');
@@ -48,7 +47,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('probak', ProbaController::class);
+    Route::get('/viajes', ViajesController::class .'@index')->name('viajes.index');
+    Route::get('/medicos', MedicosController::class .'@index')->name('medicos.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
