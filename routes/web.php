@@ -4,8 +4,13 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TripulantesController;
 use App\Http\Controllers\ViajesController;
+use App\Http\Controllers\ProbaController;
+use App\Http\Controllers\MedicosController;
 
 
+
+
+Route::get('/viajes', ViajesController::class .'@index')->name('viajes.index')->middleware('auth');
 
 
 //Route::store('/tripulantes', TripulantesController::class .'@store')->name('tripulante.store');
@@ -21,9 +26,8 @@ Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripul
 Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->name('tripulantes.create');
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
-Route::put('/tripulante/{tripulante}', [TripulanteController::class, 'update'])->name('tripulantes.update');
+Route::put('/tripulante/{tripulante}', [TripulantesController::class, 'update'])->name('tripulantes.update');
 
-Route::get('/viajes', ViajesController::class .'@index')->name('viajes.index');
 Route::get('/viajes/añadir', ViajesController::class .'@create')->name('viajes.create');
 Route::post('/viajes', [ViajesController::class, 'store'])->name('viajes.store');
 Route::delete('/viajes/{viaje}', ViajesController::class .'@destroy')->name('viajes.destroy');
@@ -44,9 +48,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::resource('probak', ProbaController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';

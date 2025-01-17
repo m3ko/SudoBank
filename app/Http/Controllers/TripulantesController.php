@@ -47,12 +47,12 @@ class TripulantesController extends Controller
     
      // Actualizar un tripulante
      public function  update (Request $request, $id) {
-        $request->validate([
-            'nombre'])
-        $tripulante = Tripulante::($id);
-        $tripulante->update($request->all());
-        return redirect()->route('tripulantes.index')
-        ->with('success', 'Post updated succesfully');
+        // $request->validate([
+        //     'nombre'])
+        // $tripulante = Tripulante::($id);
+        // $tripulante->update($request->all());
+        // return redirect()->route('tripulantes.index')
+        // ->with('success', 'Post updated succesfully');
     }
 
       // // public function  update (Request $request, $id) {
