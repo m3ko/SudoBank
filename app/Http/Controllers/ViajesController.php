@@ -71,7 +71,7 @@ class ViajesController extends Controller
          $viaje = Viajes::find($id);
          $viaje->update($request->all());
  
-         return redirect()->route('medicos.index')
+         return redirect()->route('viajes.index')
              ->with('success', 'Post updated successfully.');
      }
  

@@ -21,7 +21,7 @@ class TripulantesController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        
+     if(auth()->user()->can('añadir entidad')){  
  
         $tripulante = new Tripulantes;
  
@@ -35,7 +35,11 @@ class TripulantesController extends Controller
         $tripulante->save();
  
         return redirect()->route('tripulantes.index')->with('success', 'Tripulante creado correctamente');
-    }
+      } else{
+
+        abort(403);
+
+      } }
 
     //Actualizar los datos
     public function update(Request $request, $id)
@@ -60,11 +64,16 @@ class TripulantesController extends Controller
 
     //Editar los datos en el formulario
     public function edit(Request $request,$id) {
+
+        if(auth()->user()->can('añadir entidad')){  
+
         //Obtener todos los tripulantes de la BBDD
         $tripulante = Tripulantes::find($id);
         //Pasar los tripulantes a la vista
         return view('tripulantes.edit', compact('tripulante'));
-    }
+    }else{
+        abort(403);
+    }}
     
 
      public function create()
