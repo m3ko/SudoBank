@@ -19,20 +19,25 @@ Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripul
 Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->name('tripulantes.create');
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
-Route::put('/tripulante/{tripulante}', [TripulantesController::class, 'update'])->name('tripulantes.update');
-//Rutas Viajes
-Route::get('/viajes', ViajesController::class .'@index')->name('viajes.index')->middleware('auth');
+// Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
+Route::put('/tripulantes/{tripulante}', [TripulantesController::class, 'update'])->name('tripulantes.update');
+Route::get('/tripulantes/{tripulante}/edit', [TripulantesController::class, 'edit'])->name('tripulantes.edit');
+
+//Rutas viajes
 Route::get('/viajes/añadir', ViajesController::class .'@create')->name('viajes.create');
 Route::post('/viajes', [ViajesController::class, 'store'])->name('viajes.store');
 Route::delete('/viajes/{viaje}', ViajesController::class .'@destroy')->name('viajes.destroy');
 Route::put('/viaje/{viaje}', [ViajesController::class, 'update'])->name('viajes.update');
+Route::get('/viaje/{viaje}/edit', [ViajesController::class, 'edit'])->name('viajes.edit');
 
 //Rutas Medicos
 Route::get('/medicos/añadir', MedicosController::class .'@create')->name('medicos.create');
 Route::post('/medicos', [MedicosController::class, 'store'])->name('medicos.store');
 Route::delete('/medicos/{medico}', MedicosController::class .'@destroy')->name('medicos.destroy');
-Route::put('/medicos/{medico}', [MedicosController::class, '@update'])->name('medicos.update');
+// Route::delete('/medicos/{medico}', [MedicosController::class, 'destroy'])->name('medicos.destroy');
 
+Route::put('/medicos/{medico}', [MedicosController::class, 'update'])->name('medicos.update');
+Route::get('/medicos/{medico}/edit', [MedicosController::class, 'edit'])->name('medicos.edit');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
