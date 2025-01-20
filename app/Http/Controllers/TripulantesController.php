@@ -89,6 +89,20 @@ class TripulantesController extends Controller
          return view('tripulantes.create');
      }
 
+     public function destroy(Tripulantes $tripulante)
+     {
+         $tripulante->delete();
+ 
+         return redirect()->route('tripulantes.index')->with('success', 'Tripulante eliminado correctamente');
+     }
+
+
+     public function show($id) {
+        $tripulante = Tripulantes::find($id);
+        return view('tripulantes.show', compact('tripulante'));
+     }
+
+
 
 
     // public function destroy($id) {
@@ -125,17 +139,5 @@ class TripulantesController extends Controller
     //  }
  
      // Eliminar un tripulante
-     public function destroy(Tripulantes $tripulante)
-     {
-         $tripulante->delete();
- 
-         return redirect()->route('tripulantes.index')->with('success', 'Tripulante eliminado correctamente');
-     }
-
-
-     public function show($id) {
-        $tripulante = Tripulantes::find($id);
-        return view('tripulantes.show', compact('tripulante'));
-     }
-
+     
 }
