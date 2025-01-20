@@ -31,8 +31,9 @@ class MedicosController extends Controller
 
     //Añade un médico nuevo
     public function store(Request $request): RedirectResponse
-     {
-         
+{
+
+    try {     
   
          $medico = new Medicos;
   
@@ -43,8 +44,19 @@ class MedicosController extends Controller
   
          $medico->save();
         //redirige al index
-         return redirect()->route('medicos.index')->with('success', 'Médico creado correctamente');
-     }
+        return redirect()
+                ->route('medicos.create')
+                ->with('success', 'Medico creado correctamente.');
+        } catch (\Exception $e) {
+            // Mensaje de error
+            return redirect()
+                ->route('medicos.create')
+                ->with('error', 'No fue posible crear el medico. Inténtalo nuevamente.');
+        }
+
+
+
+}
 
     public function create()
      {
