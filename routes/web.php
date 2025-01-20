@@ -16,13 +16,13 @@ Route::get('/', function () {
 });
 
 //Rutas Tripulantes
-Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripulantes.index');
+Route::get('/tripulantes', TripulantesController::class .'@index')->->middleware('can:ver entidad')name('tripulantes.index');
 Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->middleware('can:crear entidad')->name('tripulantes.create');
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
-Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
+Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->->middleware('can:eliminar entidad')name('tripulantes.destroy');
 // Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');
-Route::put('/tripulantes/{tripulante}', [TripulantesController::class, 'update'])->name('tripulantes.update');
-Route::get('/tripulantes/{tripulante}/edit', [TripulantesController::class, 'edit'])->name('tripulantes.edit');
+Route::put('/tripulantes/{tripulante}', [TripulantesController::class, 'update'])->middleware('can:guardar entidad')->name('tripulantes.update');
+Route::get('/tripulantes/{tripulante}/edit', [TripulantesController::class, 'edit'])->middleware('can:editar entidad')->name('tripulantes.edit');
 
 Route::get('/tripulantes/show/{tripulante}', TripulantesController::class . '@show')->name('tripulantes.show');
 
