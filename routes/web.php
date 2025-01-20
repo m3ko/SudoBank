@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 //Rutas Tripulantes
 Route::get('/tripulantes', TripulantesController::class .'@index')->name('tripulantes.index');
-Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->name('tripulantes.create');
+Route::get('/tripulantes/añadir', TripulantesController::class .'@create')->middleware('can:crear entidad')->name('tripulantes.create');
 Route::post('/tripulantes', [TripulantesController::class, 'store'])->name('tripulantes.store');
 Route::delete('/tripulantes/{tripulante}', TripulantesController::class .'@destroy')->name('tripulantes.destroy');
 // Route::delete('/tripulantes/{tripulante}', [TripulantesController::class, 'destroy'])->name('tripulantes.destroy');

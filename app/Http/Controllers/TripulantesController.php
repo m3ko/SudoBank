@@ -6,16 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Tripulantes;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models;
+use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Routing\ControllerMiddlewareOptions;
 
 class TripulantesController extends Controller
 {
 
-     
-    public function __construct()
-    {
-        // Aplicar el middleware para asegurarse de que solo los administradores puedan acceder a las acciones
-        $this->middleware('role:editor')->only(['store', 'update', 'edit', 'destroy']);
-    }
     // Mostrar todos los tripulantes
     public function index()
     {
@@ -28,7 +26,7 @@ class TripulantesController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-     if(auth()->user()->can('añadir entidad')){  
+     if(auth()->user()->hasRole('añadir entidad')){  
  
         $tripulante = new Tripulantes;
  
