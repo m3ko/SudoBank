@@ -21,7 +21,8 @@ class ViajesController extends Controller
     }
 
     public function store(Request $request): RedirectResponse
-    {
+{
+    try {
         
  
         $viaje = new viajes;
@@ -33,7 +34,16 @@ class ViajesController extends Controller
  
         $viaje->save();
  
-        return redirect()->route('viajes.index')->with('success', 'viaje creado correctamente');
+  // Mensaje de éxito
+        return redirect()
+            ->route('viajes.create')
+            ->with('success', 'Viaje creado correctamente.');
+    } catch (\Exception $e) {
+            // Mensaje de error
+            return redirect()
+                ->route('viajes.create')
+                ->with('error', 'No fue posible crear el viaje. Inténtalo nuevamente.');
+        }
     }
 
     public function create()

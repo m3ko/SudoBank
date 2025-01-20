@@ -19,27 +19,32 @@ class TripulantesController extends Controller
         return view('tripulantes.index', compact('tripulantes'));
     }
 
-    public function store(Request $request): RedirectResponse
-    {
-     if(auth()->user()->can('añadir entidad')){  
- 
-        $tripulante = new Tripulantes;
- 
-        $tripulante->nombre = $request->nombre;
-        $tripulante->apellido = $request->apellido;
-        $tripulante->rol = $request->rol;
-        $tripulante->fecha_incorporacion = $request->fecha_incorporacion;
-        $tripulante->fecha_baja = $request->fecha_baja;
+   public function store(Request $request): RedirectResponse
+{
+        try {
+            // Crear y guardar el nuevo tripulante
+            $tripulante = new Tripulantes;
 
- 
-        $tripulante->save();
- 
-        return redirect()->route('tripulantes.index')->with('success', 'Tripulante creado correctamente');
-      } else{
+            $tripulante->nombre = $request->nombre;
+            $tripulante->apellido = $request->apellido;
+            $tripulante->rol = $request->rol;
+            $tripulante->fecha_incorporacion = $request->fecha_incorporacion;
+            $tripulante->fecha_baja = $request->fecha_baja;
 
-        abort(403);
+            $tripulante->save();
 
-      } }
+            // Mensaje de éxito
+            return redirect()
+                ->route('tripulantes.create')
+                ->with('success', 'Tripulante creado correctamente.');
+        } catch (\Exception $e) {
+            // Mensaje de error
+            return redirect()
+                ->route('tripulantes.create')
+                ->with('error', 'No fue posible crear el tripulante. Inténtalo nuevamente.');
+        }
+
+}
 
     //Actualizar los datos
     public function update(Request $request, $id)
