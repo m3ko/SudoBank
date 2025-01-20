@@ -27,6 +27,8 @@ class TripulantesController extends Controller
     public function store(Request $request): RedirectResponse
     {
      if(auth()->user()->hasRole('editor')){  
+
+    try {
  
         $tripulante = new Tripulantes;
  
@@ -38,13 +40,17 @@ class TripulantesController extends Controller
 
  
         $tripulante->save();
- 
-        return redirect()->route('tripulantes.index')->with('success', 'Tripulante creado correctamente');
-      } else{
-
-        abort(403);
-
-      } }
+        //redirige al index
+        return redirect()
+            ->route('tripulantes.create')
+            ->with('success', 'Tripulante creado correctamente.');
+        } catch (\Exception $e) {
+         // Mensaje de error
+            return redirect()
+                ->route('tripulantes.create')
+                ->with('error', 'No fue posible crear el tripulante. Inténtalo nuevamente.');
+        }}
+    }
 
     //Actualizar los datos
     public function update(Request $request, $id)
@@ -70,7 +76,7 @@ class TripulantesController extends Controller
     //Editar los datos en el formulario
     public function edit(Request $request,$id) {
 
-        if(auth()->user()->hasRole('editar entidad')){  
+        if(auth()->user()->hasRole('editor')){  
 
         //Obtener todos los tripulantes de la BBDD
         $tripulante = Tripulantes::find($id);

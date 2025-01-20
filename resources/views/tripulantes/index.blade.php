@@ -31,7 +31,9 @@
                     <td>{{ $tripulante->fecha_incorporacion }}</td>
                     <td>{{ $tripulante->fecha_baja }}</td>
                     <td>
+                        @role('editor')
                         <a href="{{ route('tripulantes.edit', $tripulante->id) }}">Editar</a>
+                        @endrole
                         <a href="{{ route('tripulantes.show', $tripulante->id) }}">Seleccionar</a>
                         <form action="{{ route('tripulantes.destroy', $tripulante->id) }}" method="POST" style="display:inline;"> 
                             @csrf

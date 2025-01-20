@@ -9,6 +9,7 @@ use App\Models\Viajes;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illumuniate;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,12 +18,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+        User::factory()->create([
+            'name' => 'Aimar',
+            'email' => 'aimar@example.com',
+        ]);
+        
+        User::factory(10)->create();
 
         Tripulantes::create([
             'nombre' => 'Juan',
@@ -42,6 +49,12 @@ class DatabaseSeeder extends Seeder
             'destino'=>'Tanzania',
             'fecha_hora'=>'2022/02/02'
         ]);
+
+        $this->call([
+            PermisosSeeder::class
+        ]);
+
+
 
 
     }

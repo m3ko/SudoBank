@@ -14,7 +14,7 @@ class Rescatados extends Model
         'edad',
         'sexo',
         'procedencia',
-        'valoración_medica',
+        'valoracion_medica',
         'medico_id',
         'rescate_id'
 
