@@ -25,7 +25,7 @@ class RescatesController extends Controller
     {
      if(auth()->user()->hasRole('editor')){  
 
-    try {
+    //try {
  
         $rescate = new Rescates;
  
@@ -39,12 +39,13 @@ class RescatesController extends Controller
         return redirect()
             ->route('rescates.create')
             ->with('success', 'Rescate creado correctamente.');
-        } catch (\Exception $e) {
-         // Mensaje de error
-            return redirect()
-                ->route('rescates.create')
-                ->with('error', 'No fue posible crear el Rescate. Inténtalo nuevamente.');
-        }}
+        // } catch (\Exception $e) {
+        //  // Mensaje de error
+        //     return redirect()
+        //         ->route('rescates.create')
+        //         ->with('error', 'No fue posible crear el Rescate. Inténtalo nuevamente.');
+        // }
+        }
     }
 
     //Actualizar los datos

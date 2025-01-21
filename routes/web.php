@@ -60,6 +60,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
     //Index Protegidos
+    
     Route::get('/rescatados', RescatadosController::class .'@index')->middleware('can:ver entidad')->name('rescatados.index');
     Route::get('/tripulantes', TripulantesController::class .'@index')->middleware('can:ver entidad')->name('tripulantes.index');
     Route::get('/viajes', ViajesController::class .'@index')->middleware('can:ver entidad')->name('viajes.index');
