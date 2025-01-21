@@ -9,8 +9,8 @@
 <body>
     <h1>Select</h1>
     <ul>
-        <li>{{ $rescate->fechaHora_inicio }} </li>
-        <li>{{ $rescate->fechaHora_fin }} </li>
+        <li>{{ $rescate->fecha_hora_inicio }} </li>
+        <li>{{ $rescate->fecha_hora_fin }} </li>
         <li>{{ $rescate->viajes_id }} </li>
     </ul>
 </body>

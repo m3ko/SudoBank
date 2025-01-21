@@ -22,8 +22,8 @@
             @foreach($rescates as $rescate)
                 <tr>
                     <td>{{ $rescate->id }}</td>
-                    <td>{{ $rescate->fechaHora_inicio }}</td>
-                    <td>{{ $rescate->fechaHora_fin }}</td>
+                    <td>{{ $rescate->fecha_hora_inicio }}</td>
+                    <td>{{ $rescate->fecha_hora_fin }}</td>
                     <td>{{ $rescate->viajes_id }}</td>
                     <td>
                         @role('editor')

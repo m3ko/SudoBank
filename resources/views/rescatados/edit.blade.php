@@ -10,11 +10,11 @@
 
     
     <label for="fecha_incorporacion">Fecha Incorporación</label>
-    <input type="text" name="fecha_incorporacion" value="{{ old('fecha_incorporacion', $medico->fecha_incorporacion)}}">
+    <input type="date" name="fecha_incorporacion" value="{{ old('fecha_incorporacion', $medico->fecha_incorporacion)}}">
 
 
     <label for="fecha_baja">Fecha Baja</label>
-    <input type="text" name="fecha_baja" value="{{ old('fecha_baja', $medico->fecha_baja)}}">
+    <input type="date" name="fecha_baja" value="{{ old('fecha_baja', $medico->fecha_baja)}}">
 
     <button type="submit">Actualizar</button>
 </form>

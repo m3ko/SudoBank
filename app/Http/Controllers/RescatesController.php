@@ -25,12 +25,12 @@ class RescatesController extends Controller
     {
      if(auth()->user()->hasRole('editor')){  
 
-    //try {
+    try {
  
         $rescate = new Rescates;
  
-        $rescate->fechaHora_inicio = $request->fechaHora_inicio;
-        $rescate->fechaHora_fin = $request->fechaHora_fin;
+        $rescate->fecha_hora_inicio = $request->fecha_hora_inicio;
+        $rescate->fecha_hora_fin = $request->fecha_hora_fin;
         $rescate->viajes_id = $request->viajes_id;
 
  
@@ -39,12 +39,12 @@ class RescatesController extends Controller
         return redirect()
             ->route('rescates.create')
             ->with('success', 'Rescate creado correctamente.');
-        // } catch (\Exception $e) {
-        //  // Mensaje de error
-        //     return redirect()
-        //         ->route('rescates.create')
-        //         ->with('error', 'No fue posible crear el Rescate. Inténtalo nuevamente.');
-        // }
+        } catch (\Exception $e) {
+         // Mensaje de error
+            return redirect()
+                ->route('rescates.create')
+                ->with('error', 'No fue posible crear el Rescate. Inténtalo nuevamente.');
+        }
         }
     }
 
@@ -52,8 +52,8 @@ class RescatesController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'fechaHora_inicio',
-            'fechaHora_fin',
+            'fecha_hora_inicio',
+            'fecha_hora_fin',
             'viajes_id'
         ]);
 
@@ -70,7 +70,7 @@ class RescatesController extends Controller
 
         if(auth()->user()->hasRole('editor')){  
         $rescate = Rescates::find($id);
-        return view('rescates.edit', compact('rescates'));
+        return view('rescates.edit', compact('rescate'));
 
     }else{
         abort(403); 

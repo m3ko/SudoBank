@@ -11,10 +11,10 @@
 <body>
     <form action="{{ route('rescates.store')}}" method="post">
         @csrf
-        <label for="fechaHora_inicio">Fecha Hora Inicio:</label>
-        <input type="text" id="fechaHora_inicio" name="fechaHora_inicio"><br><br>
+        <label for="fecha_hora_inicio">Fecha Hora Inicio:</label>
+        <input type="date" id="fecha_hora_inicio" name="fecha_hora_inicio"><br><br>
         <label for="fechaHora_fin">Fecha Hora Fin:</label>
-        <input type="text" id="fechaHora_fin" name="fechaHora_fin"><br><br>
+        <input type="date" id="fecha_hora_fin" name="fecha_hora_fin"><br><br>
         <label for="viajes_id">ID Viajes:</label>
         <input type="text" id="viajes_id" name="viajes_id"><br><br>
        
