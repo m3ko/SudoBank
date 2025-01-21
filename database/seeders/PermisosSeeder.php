@@ -18,6 +18,8 @@ class PermisosSeeder extends Seeder
         Permission::create(['name' => 'crear entidad']);
         Permission::create(['name' => 'editar entidad']);
         Permission::create(['name' => 'añadir entidad']);
+        Permission::create(['name' => 'guardar entidad']);
+
         Permission::create(['name' => 'ver entidad']);
 
         // Crear roles
@@ -27,7 +29,7 @@ class PermisosSeeder extends Seeder
 
         // Asignar permisos a los roles
         $adminRole->givePermissionTo(Permission::all());  // El admin tiene todos los permisos
-        $editorRole->givePermissionTo(['crear entidad', 'editar entidad', 'añadir entidad','ver entidad']);  // El editor puede crear, editar y añadir
+        $editorRole->givePermissionTo(['crear entidad', 'editar entidad', 'añadir entidad','ver entidad','guardar entidad']);  // El editor puede crear, editar y añadir
         $visorRole->givePermissionTo('ver entidad');  // El visor solo puede ver
 
         // Asignar roles a los usuarios (si es necesario)
