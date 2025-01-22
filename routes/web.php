@@ -30,6 +30,9 @@ Route::delete('/viajes/{viaje}', ViajesController::class .'@destroy')->middlewar
 Route::put('/viajes/{viaje}', [ViajesController::class, 'update'])->middleware('can:guardar entidad')->name('viajes.update');
 Route::get('/viajes/{viaje}/edit', [ViajesController::class, 'edit'])->middleware('can:editar entidad')->name('viajes.edit');
 Route::get('/viajes/show/{viaje}', ViajesController::class .'@show')->middleware('can:ver entidad')->name('viajes.show');
+Route::post('/viajes/{viaje}/add-tripulantes', [ViajesController::class, 'addTripulantes'])->name('viajes.addTripulantes');
+Route::post('/viajes/{viaje}/add-medicos', [ViajesController::class, 'addMedicos'])->name('viajes.addMedicos');
+
 
 //Rutas Medicos
 Route::get('/medicos/añadir', MedicosController::class .'@create')->middleware('can:crear entidad')->name('medicos.create');

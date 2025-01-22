@@ -1,5 +1,5 @@
 
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -16,8 +16,9 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Rol</th>
-                <th>Fecha de Incorporación</th>
-                <th>Fecha de Baja</th>
+                <th>Fecha Incorporación</th>
+                <th>Fecha Baja</th>
+                <th>Viajes</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -31,26 +32,35 @@
                     <td>{{ $tripulante->fecha_incorporacion }}</td>
                     <td>{{ $tripulante->fecha_baja }}</td>
                     <td>
-                        @role('editor')
+                        @if($tripulante->viajes->isEmpty())
+                            Sin viajes
+                        @else
+                            <ul>
+                                @foreach($tripulante->viajes as $viaje)
+                                    <li>
+                                        <a href="{{ route('viajes.show', $viaje->id) }}">
+                                            {{ $viaje->id }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </td>
+                    <td>
                         <a href="{{ route('tripulantes.edit', $tripulante->id) }}">Editar</a>
-                        @endrole
-                        <a href="{{ route('tripulantes.show', $tripulante->id) }}">Seleccionar</a>
-                        <form action="{{ route('tripulantes.destroy', $tripulante->id) }}" method="POST" style="display:inline;"> 
+                        <a href="{{ route('tripulantes.show', $tripulante->id) }}">Ver</a>
+                        <form action="{{ route('tripulantes.destroy', $tripulante->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Eliminar</button>
                         </form>
-                        
                     </td>
                 </tr>
             @endforeach
-            
         </tbody>
     </table>
     <form action="{{ route('tripulantes.create') }}" style="display:inline;"> 
-        
         <button type="submit">Añadir Nuevo</button>
     </form>
-
 </body>
 </html>

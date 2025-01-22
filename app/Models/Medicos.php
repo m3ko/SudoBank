@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class medicos extends Model
+class Medicos extends Model
 {
     protected $fillable = [
         'nombre',
@@ -13,6 +14,6 @@ class medicos extends Model
         'fecha_baja'
     ];
     public function viajes(): BelongsToMany{
-        return $this->belongsToMany(viajes::class);
+        return $this->belongsToMany(Viajes::class, 'medicos_viaje');
     }
 }

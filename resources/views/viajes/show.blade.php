@@ -14,5 +14,32 @@
         <li>{{ $viaje->destino }} </li>
         <li>{{ $viaje->fecha_hora }} </li>
     </ul>
+    <h2>Añadir Tripulantes al Viaje</h2>
+<form action="{{ route('viajes.addTripulantes', $viaje->id) }}" method="POST">
+    @csrf
+    <label for="tripulantes">Seleccionar Tripulantes:</label>
+    <select name="tripulantes[]" id="tripulantes" multiple>
+        @foreach($todosTripulantes as $tripulante)
+            <option value="{{ $tripulante->id }}">
+                {{ $tripulante->nombre }} {{ $tripulante->apellido }}
+            </option>
+        @endforeach
+    </select>
+    <button type="submit">Añadir Tripulantes</button>
+</form>
+
+<h2>Añadir Medicos al Viaje</h2>
+<form action="{{ route('viajes.addMedicos', $viaje->id) }}" method="POST">
+    @csrf
+    <label for="medicos">Seleccionar Medicos:</label>
+    <select name="medicos[]" id="medicos" multiple>
+        @foreach($todosMedicos as $medico)
+            <option value="{{ $medico->id }}">
+                {{ $medico->nombre }} {{ $medico->apellido }}
+            </option>
+        @endforeach
+    </select>
+    <button type="submit">Añadir Medicos</button>
+</form>
 </body>
 </html>

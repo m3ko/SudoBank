@@ -29,6 +29,21 @@
                     <td>{{ $medico->fecha_incorporacion }}</td>
                     <td>{{ $medico->fecha_baja }}</td>
                     <td>
+                        @if($medico->viajes->isEmpty())
+                            Sin viajes
+                        @else
+                            <ul>
+                                @foreach($medico->viajes as $viaje)
+                                    <li>
+                                        <a href="{{ route('viajes.show', $viaje->id) }}">
+                                            {{ $viaje->id }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </td>
+                    <td>
                         <a href="{{ route('medicos.edit', $medico->id) }}">Editar</a>
                         <a href="{{ route('medicos.show', $medico->id) }}">Seleccionar</a>
 

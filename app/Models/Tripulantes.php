@@ -16,6 +16,7 @@ class Tripulantes extends Model
     ];
 
     public function viajes(): BelongsToMany{
-        return $this->belongsToMany(Viajes::class);
+        return $this->belongsToMany(Viajes::class, 'tripulantes_viaje');
     }
+    
 }

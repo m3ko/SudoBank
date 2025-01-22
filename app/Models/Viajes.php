@@ -13,6 +13,13 @@ class Viajes extends Model
         'fechaHora'
     ];
     public function tripulantes(): BelongsToMany{
-        return $this->belongsToMany(Tripulantes::class);
+        return $this->belongsToMany(Tripulantes::class, 'tripulantes_viaje');
+    }
+    public function medicos(): BelongsToMany{
+        return $this->belongsToMany(Medicos::class, 'medicos_viaje');
+    }
+    public function rescates(): HasMany
+    {
+        return $this->hasMany(Rescates::class);
     }
 }

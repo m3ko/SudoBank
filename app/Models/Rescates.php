@@ -14,6 +14,10 @@ class Rescates extends Model
         'viajes_id'
 
     ];
+    public function viajes(): BelongsTo
+    {
+        return $this->belongsTo(Viajes::class);
+    }
     public function rescatados(): HasMany
     {
         return $this->hasMany(Rescatados::class);
