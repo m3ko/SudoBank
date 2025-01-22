@@ -61,8 +61,15 @@ class RescatadosController extends Controller
         //         ->with('error', 'No fue posible crear el rescatado. Inténtalo nuevamente.');
          //}
         }
-    }
 
+        
+    }
+    public function indexApi(){
+        // Carga los rescatados junto con sus relaciones, si existen
+        $rescatados = Rescatados::with('rescates')->get();
+
+        return response()->json($rescatados, 200); // Respuesta en formato JSON
+    }
 
 
 

@@ -75,6 +75,21 @@ Route::get('/dashboard', function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/viajesApi', [App\Http\Controllers\ViajesController::class, 'indexApi']);
+Route::get('/viajesApi/{id}', [App\Http\Controllers\ViajesController::class, 'show']);
+
+Route::get('rescatesApi', [RescatesController::class, 'indexApi']);
+Route::get('rescatesApi/{id}', [RescatesController::class, 'show']);
+
+
+Route::get('rescatadosApi', [RescatadosController::class, 'indexApi']);
+Route::get('rescatadosApi/{id}', [RescatadosController::class, 'show']);
+
+
+Route::get('/testApi', function () {
+    return response()->json(['message' => 'API funcionando correctamente']);
+});
+
 
 
 require __DIR__.'/auth.php';

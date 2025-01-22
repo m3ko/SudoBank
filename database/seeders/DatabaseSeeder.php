@@ -54,6 +54,10 @@ class DatabaseSeeder extends Seeder
             PermisosSeeder::class
         ]);
 
+        Rescates::factory(10)->create();
+        Rescatados::factory(10)->create();
+        
+
 
 
 

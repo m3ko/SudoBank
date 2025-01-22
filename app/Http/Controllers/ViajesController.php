@@ -139,6 +139,11 @@ class ViajesController extends Controller
          // Redirige con un mensaje de éxito
          return redirect()->route('viajes.show', $viajeId)->with('success', 'medicos añadidos exitosamente al viaje.');
      }
+     public function indexApi()
+    {
+        $viajes = Viajes::with('tripulantes')->get(); // Carga las relaciones
+        return response()->json($viajes); // Retorna los datos en formato JSON
+    }
      
 }
 

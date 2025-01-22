@@ -95,4 +95,11 @@ class RescatesController extends Controller
         $rescate = Rescates::find($id);
         return view('rescates.show', compact('rescate'));
      }
+     public function indexApi()
+    {
+        // Carga los rescates junto con sus relaciones (opcional)
+        $rescates = Rescates::with('viajes', 'rescatados')->get();
+
+        return response()->json($rescates, 200); // Respuesta en formato JSON
+    }
 }
