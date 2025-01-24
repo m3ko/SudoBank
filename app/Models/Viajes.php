@@ -10,7 +10,7 @@ class Viajes extends Model
     protected $fillable = [
         'origen',
         'destino',
-        'fechaHora'
+        'fecha_hora'
     ];
     public function tripulantes(): BelongsToMany{
         return $this->belongsToMany(Tripulantes::class, 'tripulantes_viaje');

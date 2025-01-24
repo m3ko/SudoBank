@@ -142,7 +142,8 @@ class ViajesController extends Controller
      public function indexApi()
     {
         $viajes = Viajes::with('tripulantes')->get(); // Carga las relaciones
-        return response()->json($viajes); // Retorna los datos en formato JSON
+        return response()->json($viajes); // Retorna los datos en formato 
+        // return Viajes::with('tripulantes')->get();
     }
      
 }

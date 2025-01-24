@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId("rescates_id")->nullable();
             $table->string("nombre");
             $table->string("apellido");
-            $table->string("foto");
+            $table->string("foto")->nullable();
             $table->integer("edad");
             $table->string("sexo");
             $table->string("procedencia");
