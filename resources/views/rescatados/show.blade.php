@@ -9,11 +9,17 @@
 <body>
     <h1>Select</h1>
     <ul>
-        <li>{{ $medico->id }} </li>
-        <li>{{ $medico->nombre }} </li>
-        <li>{{ $medico->apellido }} </li>
-        <li>{{ $medico->fecha_incorporacion }} </li>
-        <li>{{ $medico->fecha_baja }} </li>
+        <li>{{ $rescatado->id }} </li>
+        <li>{{ $rescatado->nombre }} </li>
+        <li>{{ $rescatado->apellido }} </li>
+        <li>{{ $rescatado->foto }} </li>
+        <li>{{ $rescatado->edad }} </li>
+        <li>{{ $rescatado->sexo }} </li>
+        <li>{{ $rescatado->procedencia }} </li>
+        <li>{{ $rescatado->valoracion_medica }} </li>
+        <li>{{ $rescatado->medico_id }} </li>
+        <li>{{ $rescatado->rescate_id }} </li>
+ 
     </ul>
 </body>
 </html>

@@ -25,10 +25,10 @@
         <input type="text" id="procedencia" name="procedencia"><br><br>
         <label for="valoracion_medica">Valoracion_medica:</label>
         <input type="text" id="valoracion_medica" name="valoracion_medica"><br><br>
-        <label for="medico_id">Medico_ID:</label>
-        <input type="text" id="medico_id" name="medico_id"><br><br>
-        <label for="rescate_id">Rescate_ID:</label>
-        <input type="text" id="rescate_id" name="rescate_id"><br><br>
+        <label for="medicos_id">Medico_ID:</label>
+        <input type="text" id="medicos_id" name="medicos_id"><br><br>
+        <label for="rescates_id">Rescate_ID:</label>
+        <input type="text" id="rescates_id" name="rescates_id"><br><br>
         <input type="submit" value="Añadir">
       </form> 
       <form action="{{ route('rescatados.index')}}">

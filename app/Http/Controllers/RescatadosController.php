@@ -44,8 +44,8 @@ class RescatadosController extends Controller
         $rescatado->sexo = $request->sexo;
         $rescatado->procedencia = $request->procedencia;
         $rescatado->valoracion_medica = $request->valoracion_medica;
-        $rescatado->medico_id = $request->medico_id;
-        $rescatado->rescate_id = $request->rescate_id;
+        $rescatado->medicos_id = $request->medicos_id;
+        $rescatado->rescates_id = $request->rescates_id;
 
 
  
@@ -64,6 +64,41 @@ class RescatadosController extends Controller
 
         
     }
+    public function edit(Request $request,$id) {
+
+        if(auth()->user()->hasRole('editor')){  
+        $rescatado = Rescatados::find($id);
+        return view('rescatados.edit', compact('rescatado'));
+
+    }else{
+        abort(403); 
+    }}
+    public function update(Request $request, $id)
+{
+    // Validar los datos enviados desde el formulario
+    $request->validate([
+        'nombre',
+        'apellido',
+        'foto', // Opcional
+        'edad',
+        'sexo', // Solo puede ser M o F
+        'procedencia' ,
+        'valoracion_medica',
+        'medicos_id', // Debe existir en la tabla `medicos`
+        'rescates_id' // Debe existir en la tabla `rescates`
+    ]);
+
+    // Buscar el registro en la base de datos
+    $rescatado = Rescatados::find($id);
+
+    // Actualizar el registro con los datos enviados
+    $rescatado->update($request->all());
+
+    // Redirigir con un mensaje de éxito
+    return redirect()->route('rescatados.index')
+        ->with('success', 'Rescatado actualizado exitosamente.');
+}
+    
     public function indexApi(){
         // Carga los rescatados junto con sus relaciones, si existen
         $rescatados = Rescatados::with('rescates')->get();

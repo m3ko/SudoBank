@@ -32,18 +32,19 @@
                     <td>{{ $rescatados->apellido }}</td>
                     <td>{{ $rescatados->foto }}</td>
                     <td>{{ $rescatados->edad }}</td>
+                    <td>{{ $rescatados->sexo }}</td>
                     <td>{{ $rescatados->procedencia }}</td>
                     <td>{{ $rescatados->valoracion_medica }}</td>
-                    <td>{{ $rescatados->medico_id }}</td>
-                    <td>{{ $rescatados->rescate_id }}</td>
+                    <td>{{ $rescatados->medicos_id }}</td>
+                    <td>{{ $rescatados->rescates_id }}</td>
 
                     
 
                     <td>
-                        <a href="{{ route('rescatados.edit', $rescatado->id) }}">Editar</a>
-                        <a href="{{ route('rescatados.show', $rescatado->id) }}">Seleccionar</a>
+                        <a href="{{ route('rescatados.edit', $rescatados->id) }}">Editar</a>
+                        <a href="{{ route('rescatados.show', $rescatados->id) }}">Seleccionar</a>
 
-                        <form action="{{ route('rescatados.destroy', $medico->id) }}" method="POST" style="display:inline;"> 
+                        <form action="{{ route('rescatados.destroy', $rescatados->id) }}" method="POST" style="display:inline;"> 
                         
                             @csrf
                             @method('DELETE')
