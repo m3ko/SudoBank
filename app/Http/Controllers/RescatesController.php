@@ -21,48 +21,51 @@ class RescatesController extends Controller
         return view('rescates.index', compact('rescates'));
     }
 
-    public function store(Request $request): RedirectResponse
-    {
-     if(auth()->user()->hasRole('editor')){  
+    public function store(Request $request)
+{
+    // Validación para asegurarse de que el viajes_id es válido
+    $request->validate([
+        'fecha_hora_inicio' => 'required|date',
+        'fecha_hora_fin' => 'required|date',
+        'viajes_id' => 'required|exists:viajes,id',  // Validación de existencia
+    ]);
 
-    try {
- 
-        $rescate = new Rescates;
- 
+    // Crear un nuevo rescate con los datos válidos
+    $rescate = new Rescates();
+    $rescate->fecha_hora_inicio = $request->fecha_hora_inicio;
+    $rescate->fecha_hora_fin = $request->fecha_hora_fin;
+    $rescate->viajes_id = $request->viajes_id;
+
+    // Guardar el rescate
+    $rescate->save();
+
+    // Redirigir con mensaje de éxito
+    return redirect()->route('rescates.index')->with('success', 'Rescate añadido correctamente');
+}
+
+    //Actualizar los datos
+    public function update(Request $request, $id)
+{
+        // Validación para asegurarse de que el viajes_id es válido
+        $request->validate([
+            'fecha_hora_inicio' => 'required|date',
+            'fecha_hora_fin' => 'required|date',
+            'viajes_id' => 'required|exists:viajes,id',  // Validación de existencia
+        ]);
+
+        // Encontrar el rescate por su ID
+        $rescate = Rescates::findOrFail($id);
+
+        // Actualizar el rescate con los nuevos datos
         $rescate->fecha_hora_inicio = $request->fecha_hora_inicio;
         $rescate->fecha_hora_fin = $request->fecha_hora_fin;
         $rescate->viajes_id = $request->viajes_id;
 
- 
+        // Guardar los cambios
         $rescate->save();
-        //redirige al index
-        return redirect()
-            ->route('rescates.create')
-            ->with('success', 'Rescate creado correctamente.');
-        } catch (\Exception $e) {
-         // Mensaje de error
-            return redirect()
-                ->route('rescates.create')
-                ->with('error', 'No fue posible crear el Rescate. Inténtalo nuevamente.');
-        }
-        }
-    }
 
-    //Actualizar los datos
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'fecha_hora_inicio',
-            'fecha_hora_fin',
-            'viajes_id'
-        ]);
-
-        //Buscar registro en la BBDD
-        $rescate = Rescates::find($id);
-        $rescate->update($request->all());
-
-        return redirect()->route('rescates.index')
-        ->with('success', 'Post updated successfully.');
+        // Redirigir con mensaje de éxito
+        return redirect()->route('rescates.index')->with('success', 'Rescate actualizado correctamente');
     }
 
   

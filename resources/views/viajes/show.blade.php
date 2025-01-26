@@ -14,6 +14,7 @@
         <li>{{ $viaje->destino }} </li>
         <li>{{ $viaje->fecha_hora }} </li>
     </ul>
+    @can('añadir entidad')
     <h2>Añadir Tripulantes al Viaje</h2>
 <form action="{{ route('viajes.addTripulantes', $viaje->id) }}" method="POST">
     @csrf
@@ -41,5 +42,9 @@
     </select>
     <button type="submit">Añadir Medicos</button>
 </form>
+@endcan
+<form action="{{ route('viajes.index')}}">
+    <input type="submit" value="Volver">
+  </form>
 </body>
 </html>

@@ -35,21 +35,33 @@ class RescatadosController extends Controller
 
     //try {
  
-        $rescatado = new Rescatados;
- 
-        $rescatado->nombre = $request->nombre;
-        $rescatado->apellido = $request->apellido;
-        $rescatado->foto = $request->foto;
-        $rescatado->edad = $request->edad;
-        $rescatado->sexo = $request->sexo;
-        $rescatado->procedencia = $request->procedencia;
-        $rescatado->valoracion_medica = $request->valoracion_medica;
-        $rescatado->medicos_id = $request->medicos_id;
-        $rescatado->rescates_id = $request->rescates_id;
+    $validated = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'apellido' => 'required|string|max:255',
+        'foto' => 'nullable|string|url',
+        'edad' => 'required|integer|min:0',
+        'sexo' => 'required|in:Masculino,Femenino',
+        'procedencia' => 'required|string|max:255',
+        'valoracion_medica' => 'required|string|max:255',
+        'medicos_id' => 'required|exists:medicos,id',  // Validación para que la ID de médico exista
+        'rescates_id' => 'required|exists:rescates,id', // Validación para que la ID de rescate exista
+    ]);
 
+    // Si la validación pasa, asignar los valores al modelo
+    $rescatado = new Rescatados;
 
- 
-        $rescatado->save();
+    $rescatado->nombre = $validated['nombre'];
+    $rescatado->apellido = $validated['apellido'];
+    $rescatado->foto = $validated['foto'];
+    $rescatado->edad = $validated['edad'];
+    $rescatado->sexo = $validated['sexo'];
+    $rescatado->procedencia = $validated['procedencia'];
+    $rescatado->valoracion_medica = $validated['valoracion_medica'];
+    $rescatado->medicos_id = $validated['medicos_id'];
+    $rescatado->rescates_id = $validated['rescates_id'];
+
+    // Guardar el rescatado
+    $rescatado->save();
         //redirige al index
         return redirect()
             ->route('rescatados.create')
@@ -64,6 +76,7 @@ class RescatadosController extends Controller
 
         
     }
+    
     public function edit(Request $request,$id) {
 
         if(auth()->user()->hasRole('editor')){  
@@ -73,31 +86,51 @@ class RescatadosController extends Controller
     }else{
         abort(403); 
     }}
+    
     public function update(Request $request, $id)
 {
-    // Validar los datos enviados desde el formulario
+    // Validar si los IDs existen
     $request->validate([
-        'nombre',
-        'apellido',
-        'foto', // Opcional
-        'edad',
-        'sexo', // Solo puede ser M o F
-        'procedencia' ,
-        'valoracion_medica',
-        'medicos_id', // Debe existir en la tabla `medicos`
-        'rescates_id' // Debe existir en la tabla `rescates`
+        'medicos_id' => 'exists:medicos,id',
+        'rescates_id' => 'exists:rescates,id',
     ]);
 
-    // Buscar el registro en la base de datos
-    $rescatado = Rescatados::find($id);
+    // Obtener el rescatado
+    $rescatado = Rescatados::findOrFail($id);
 
-    // Actualizar el registro con los datos enviados
-    $rescatado->update($request->all());
+    // Actualizar los campos del rescatado
+    $rescatado->nombre = $request->nombre;
+    $rescatado->apellido = $request->apellido;
+    $rescatado->foto = $request->foto;
+    $rescatado->edad = $request->edad;
+    $rescatado->sexo = $request->sexo;
+    $rescatado->procedencia = $request->procedencia;
+    $rescatado->valoracion_medica = $request->valoracion_medica;
+    $rescatado->medicos_id = $request->medicos_id;
+    $rescatado->rescates_id = $request->rescates_id;
 
-    // Redirigir con un mensaje de éxito
-    return redirect()->route('rescatados.index')
-        ->with('success', 'Rescatado actualizado exitosamente.');
+    // Guardar los cambios
+    $rescatado->save();
+
+    // Redirigir con éxito
+    return redirect()->route('rescatados.index')->with('success', 'Rescatado actualizado correctamente');
 }
+
+    public function show($id)
+    {
+        // Buscar el rescatado por su id
+        $rescatado = Rescatados::findOrFail($id);
+        
+        // Retornar la vista con los datos del rescatado
+        return view('rescatados.show', compact('rescatado'));
+    }
+
+    public function destroy(Rescatados $rescatado)
+     {
+         $rescatado->delete();
+ 
+         return redirect()->route('rescatados.index')->with('success', 'Rescatados eliminado correctamente');
+     }
     
     public function indexApi(){
         // Carga los rescatados junto con sus relaciones, si existen

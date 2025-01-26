@@ -24,26 +24,34 @@
                     <td>{{ $viaje->id }}</td>
                     <td>{{ $viaje->origen }}</td>
                     <td>{{ $viaje->destino }}</td>
-                    <td>{{ $viaje->fechaHora }}</td>
+                    <td>{{ $viaje->fecha_hora }}</td>
                     <td>
+                        @can('editar entidad')
                         <a href="{{ route('viajes.edit', $viaje->id) }}">Editar</a>
+                        @endcan
                         <a href="{{ route('viajes.show', $viaje->id) }}">Seleccionar</a>
-
+                        @can('eliminar entidad')
                         <form action="{{ route('viajes.destroy', $viaje->id) }}" method="POST" style="display:inline;"> 
                             @csrf
                             @method('DELETE')
                             <button type="submit">Eliminar</button>
                         </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach
             
         </tbody>
     </table>
+    @can('añadir entidad')
     <form action="{{ route('viajes.create') }}" style="display:inline;"> 
         
         <button type="submit">Añadir Nuevo</button>
     </form>
+    @endcan
+    <form action="{{ route('dashboard')}}">
+        <input type="submit" value="Volver">
+      </form>
 
 </body>
 </html>

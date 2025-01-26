@@ -13,5 +13,8 @@
         <li>{{ $rescate->fecha_hora_fin }} </li>
         <li>{{ $rescate->viajes_id }} </li>
     </ul>
+    <form action="{{ route('rescates.index')}}">
+        <input type="submit" value="Volver">
+      </form>
 </body>
 </html>

@@ -15,8 +15,6 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Fecha de Incorporación</th>
-                <th>Fecha de Baja</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -26,8 +24,7 @@
                     <td>{{ $medico->id }}</td>
                     <td>{{ $medico->nombre }}</td>
                     <td>{{ $medico->apellido }}</td>
-                    <td>{{ $medico->fecha_incorporacion }}</td>
-                    <td>{{ $medico->fecha_baja }}</td>
+                    
                     <td>
                         @if($medico->viajes->isEmpty())
                             Sin viajes
@@ -44,25 +41,34 @@
                         @endif
                     </td>
                     <td>
+                        @can('editar entidad')
                         <a href="{{ route('medicos.edit', $medico->id) }}">Editar</a>
+                        @endcan
                         <a href="{{ route('medicos.show', $medico->id) }}">Seleccionar</a>
-
+                        @can('eliminar entidad')
                         <form action="{{ route('medicos.destroy', $medico->id) }}" method="POST" style="display:inline;"> 
+                            
                         
                             @csrf
                             @method('DELETE')
                             <button type="submit">Eliminar</button>
                         </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach
             
         </tbody>
     </table>
+    @can('crear entidad')
     <form action="{{ route('medicos.create') }}" style="display:inline;"> 
         
         <button type="submit">Añadir Nuevo</button>
     </form>
+    @endcan
+    <form action="{{ route('dashboard')}}">
+        <input type="submit" value="Volver">
+      </form>
 
 </body>
 </html>

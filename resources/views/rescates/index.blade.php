@@ -26,15 +26,17 @@
                     <td>{{ $rescate->fecha_hora_fin }}</td>
                     <td>{{ $rescate->viajes_id }}</td>
                     <td>
-                        @role('editor')
+                        @can('editar entidad')
                         <a href="{{ route('rescates.edit', $rescate->id) }}">Editar</a>
-                        @endrole
+                        @endcan
                         <a href="{{ route('rescates.show', $rescate->id) }}">Seleccionar</a>
+                        @can('eliminar entidad')
                         <form action="{{ route('rescates.destroy', $rescate->id) }}" method="POST" style="display:inline;"> 
                             @csrf
                             @method('DELETE')
                             <button type="submit">Eliminar</button>
                         </form>
+                        @endcan
                         
                     </td>
                 </tr>
@@ -42,10 +44,16 @@
             
         </tbody>
     </table>
+    @can('añadir entidad')
     <form action="{{ route('rescates.create') }}" style="display:inline;"> 
         
         <button type="submit">Añadir Nuevo</button>
     </form>
+    @endcan
+
+    <form action="{{ route('dashboard')}}">
+        <input type="submit" value="Volver">
+      </form>
 
 </body>
 </html>

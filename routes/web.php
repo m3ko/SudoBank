@@ -45,10 +45,10 @@ Route::get('/medicos/show/{medico}', MedicosController::class .'@show')->middlew
 //Rutas rescatados
 Route::get('/rescatados/añadir', RescatadosController::class .'@create')->middleware('can:crear entidad')->name('rescatados.create');
 Route::post('/rescatados', [RescatadosController::class, 'store'])->middleware('can:guardar entidad')->name('rescatados.store');
-Route::delete('/rescatados/{tripulante}', RescatadosController::class .'@destroy')->middleware('can:eliminar entidad')->name('rescatados.destroy');
-Route::put('/rescatados/{tripulante}', [RescatadosController::class, 'update'])->middleware('can:guardar entidad')->name('rescatados.update');
-Route::get('/rescatados/{tripulante}/edit', [RescatadosController::class, 'edit'])->middleware('can:editar entidad')->name('rescatados.edit');
-Route::get('/rescatados/show/{tripulante}', RescatadosController::class . '@show')->middleware('can:ver entidad')->name('rescatados.show');
+Route::delete('/rescatados/{rescatado}', RescatadosController::class .'@destroy')->middleware('can:eliminar entidad')->name('rescatados.destroy');
+Route::put('/rescatados/{rescatado}', [RescatadosController::class, 'update'])->middleware('can:guardar entidad')->name('rescatados.update');
+Route::get('/rescatados/{rescatado}/edit', [RescatadosController::class, 'edit'])->middleware('can:editar entidad')->name('rescatados.edit');
+Route::get('/rescatados/show/{rescatado}', RescatadosController::class . '@show')->middleware('can:ver entidad')->name('rescatados.show');
 
 //Rutas rescates
 Route::get('/rescates/añadir', RescatesController::class .'@create')->middleware('can:crear entidad')->name('rescates.create');
@@ -75,21 +75,18 @@ Route::get('/dashboard', function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/viajesApi', [App\Http\Controllers\ViajesController::class, 'indexApi']);
-Route::get('/viajesApi/{id}', [App\Http\Controllers\ViajesController::class, 'show']);
-
-Route::get('rescatesApi', [RescatesController::class, 'indexApi']);
-Route::get('rescatesApi/{id}', [RescatesController::class, 'show']);
-
-
-Route::get('rescatadosApi', [RescatadosController::class, 'indexApi']);
-Route::get('rescatadosApi/{id}', [RescatadosController::class, 'show']);
-
 
 Route::get('/testApi', function () {
     return response()->json(['message' => 'API funcionando correctamente']);
 });
 
+Route::middleware('api')->get('/viajesApi', [ViajesController::class, 'indexApi']);
+Route::middleware('api')->get('/viajesApi/{id}', [ViajesController::class, 'show']);
 
+Route::middleware('api')->get('rescatesApi', [RescatesController::class, 'indexApi']);
+Route::middleware('api')->get('rescatesApi/{id}', [RescatesController::class, 'show']);
+
+Route::middleware('api')->get('rescatadosApi', [RescatadosController::class, 'indexApi']);
+Route::middleware('api')->get('rescatadosApi/{id}', [RescatadosController::class, 'show']);
 
 require __DIR__.'/auth.php';

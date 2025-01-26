@@ -47,20 +47,33 @@
                         @endif
                     </td>
                     <td>
+                        @can('editar entidad')
                         <a href="{{ route('tripulantes.edit', $tripulante->id) }}">Editar</a>
+                    @endcan
+
+                    @can('ver entidad')
                         <a href="{{ route('tripulantes.show', $tripulante->id) }}">Ver</a>
+                    @endcan
+
+                    @can('eliminar entidad')
                         <form action="{{ route('tripulantes.destroy', $tripulante->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Eliminar</button>
                         </form>
+                    @endcan
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    <form action="{{ route('tripulantes.create') }}" style="display:inline;"> 
-        <button type="submit">Añadir Nuevo</button>
-    </form>
+    @can('añadir entidad')
+        <form action="{{ route('tripulantes.create') }}" style="display:inline;">
+            <button type="submit">Añadir Nuevo</button>
+        </form>
+    @endcan
+    <form action="{{ route('dashboard')}}">
+        <input type="submit" value="Volver">
+      </form>
 </body>
 </html>

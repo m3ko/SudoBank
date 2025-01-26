@@ -15,5 +15,8 @@
         <li>{{ $medico->fecha_incorporacion }} </li>
         <li>{{ $medico->fecha_baja }} </li>
     </ul>
+    <form action="{{ route('medicos.index')}}">
+        <input type="submit" value="Volver">
+      </form>
 </body>
 </html>

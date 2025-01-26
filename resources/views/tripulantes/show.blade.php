@@ -16,5 +16,8 @@
         <li>{{ $tripulante->fecha_incorporacion }} </li>
         <li>{{ $tripulante->fecha_baja }} </li>
     </ul>
+    <form action="{{ route('tripulantes.index')}}">
+        <input type="submit" value="Volver">
+      </form>
 </body>
 </html>

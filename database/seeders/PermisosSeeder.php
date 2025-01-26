@@ -32,11 +32,6 @@ class PermisosSeeder extends Seeder
         $editorRole->givePermissionTo(['crear entidad', 'editar entidad', 'añadir entidad','ver entidad','guardar entidad', 'eliminar entidad']);  // El editor puede crear, editar y añadir
         $visorRole->givePermissionTo('ver entidad');  // El visor solo puede ver
 
-        // Asignar roles a los usuarios (si es necesario)
-        $user = \App\Models\User::find(1);  // Aquí puedes asignar un rol a un usuario en específico
-        $user->assignRole('editor');
 
-        $user = \App\Models\User::find(2); 
-        $user->assignRole('visor');
     }
 }
