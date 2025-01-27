@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Viajes</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <h1>Listado de Viajes</h1>
@@ -52,6 +53,23 @@
     <form action="{{ route('dashboard')}}">
         <input type="submit" value="Volver">
       </form>
+      @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'Aceptar'
+            });
+        @endif
 
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'Aceptar'
+            });
+        @endif
+        </script>
 </body>
 </html>
