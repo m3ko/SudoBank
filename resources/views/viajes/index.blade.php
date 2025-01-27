@@ -53,6 +53,7 @@
     <form action="{{ route('dashboard')}}">
         <input type="submit" value="Volver">
       </form>
+      <script>
       @if (session('success'))
             Swal.fire({
                 icon: 'success',
