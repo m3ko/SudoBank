@@ -130,6 +130,7 @@ class RescatadosController extends Controller
          $rescatado->delete();
  
          return redirect()->route('rescatados.index')->with('success', 'Rescatados eliminado correctamente');
+         
      }
     
     public function indexApi(){

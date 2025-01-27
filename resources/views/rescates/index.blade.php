@@ -55,5 +55,24 @@
         <input type="submit" value="Volver">
       </form>
 
+      <script>
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'Aceptar'
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'Aceptar'
+            });
+        @endif
+    </script>
 </body>
 </html>
