@@ -39,7 +39,7 @@
                             <ul>
                                 @foreach($tripulante->viajes as $viaje)
                                     <li>
-                                        <a href="{{ route('viajes.show', $viaje->id) }}">
+                                        <a href=" route('viajes.show', $viaje->id) }}">
                                             {{ $viaje->id }}
                                         </a>
                                     </li>
