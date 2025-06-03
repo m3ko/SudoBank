@@ -10,25 +10,23 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("¡Estás con la sesión iniciada! ¿Que tabla deseas administrar?") }} <br><br>
-                    <form action="{{ route('viajes.index')}}">
-                        <input type="submit" value="Viajes">
+                    <form action="{{ route('usuarios.index')}}">
+                        <input type="submit" value="Usuarios">
                       </form>
                       <br>
-                      <form action="{{ route('tripulantes.index')}}">
-                        <input type="submit" value="Tripulantes">
+                      <form action="{{ route('cuentas.index')}}">
+                        <input type="submit" value="Cuentas Bancarias">
                       </form>
                       <br>
-                      <form action="{{ route('medicos.index')}}">
-                        <input type="submit" value="Medicos">
+                      <form action="{{ route('tarjetas.index')}}">
+                        <input type="submit" value="Tarjetas">
                       </form>
                       <br>
-                      <form action="{{ route('rescates.index')}}">
-                        <input type="submit" value="Rescates">
+                      <form action="{{ route('bizums.index')}}">
+                        <input type="submit" value="Bizums">
                       </form>
                       <br>
-                      <form action="{{ route('rescatados.index')}}">
-                        <input type="submit" value="Rescatados">
-                      </form>
+      
                 </div>
             </div>
         </div>

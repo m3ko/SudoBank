@@ -24,7 +24,7 @@
             @foreach($cuentas as $cuenta)
                 <tr>
                     <td>{{ $cuenta->id }}</td>
-                    <td>{{ $cuenta->usuario->nombre }} {{ $cuenta->usuario->apellido }}</td>
+                    <td>{{ $cuenta->user->nombre }} {{ $cuenta->user->apellido }}</td>
                     <td>{{ $cuenta->saldo }}</td>
                     <td>{{ $cuenta->num_cuenta }}</td>
                     <td>{{ $cuenta->tipo_moneda }}</td>

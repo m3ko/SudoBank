@@ -23,8 +23,8 @@ class UserFactory extends Factory
             'apellido' => fake()->lastName(),
             'direccion' => fake()->address(),
             'telefono' => fake()->phoneNumber(),
-            'correo' => fake()->unique()->safeEmail(),
-            'rol' => fake()->randomElement(['cliente', 'admin']),
+            'email' => fake()->unique()->safeEmail(),
+            'rol' => fake()->randomElement(['visor', 'admin']),
             'password' => Hash::make('password'), // Contraseña por defecto
             'remember_token' => Str::random(10),
         ];

@@ -21,11 +21,14 @@
         <label for="saldo">Saldo:</label>
         <input type="number" id="saldo" name="saldo" step="0.01" value="{{ old('saldo') }}"><br><br>
 
-        <label for="num_cuenta">Número de Cuenta:</label>
-        <input type="text" id="num_cuenta" name="num_cuenta" value="{{ old('num_cuenta') }}"><br><br>
-
         <label for="tipo_moneda">Tipo de Moneda:</label>
-        <input type="text" id="tipo_moneda" name="tipo_moneda" value="{{ old('tipo_moneda') }}"><br><br>
+        <select id="tipo_moneda" name="tipo_moneda">
+            <option value="EUR" {{ old('tipo_moneda') == 'EUR' ? 'selected' : '' }}>EUR</option>
+            <option value="USD" {{ old('tipo_moneda') == 'USD' ? 'selected' : '' }}>USD</option>
+            <option value="GBP" {{ old('tipo_moneda') == 'GBP' ? 'selected' : '' }}>GBP</option>
+            <option value="JPY" {{ old('tipo_moneda') == 'JPY' ? 'selected' : '' }}>JPY</option>
+            <option value="AUD" {{ old('tipo_moneda') == 'AUD' ? 'selected' : '' }}>AUD</option>
+        </select><br><br>
 
         <button type="submit">Añadir Cuenta Bancaria</button>
     </form>

@@ -24,20 +24,31 @@ class UserController extends Controller
         return view('usuarios.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'direccion' => 'required|string|max:255',
-            'telefono' => 'required|string|max:15',
-            'correo' => 'required|email|unique:usuarios,correo',
-            'rol' => 'required|in:cliente,admin',
-        ]);
+    
+public function store(Request $request)
+{
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'apellido' => 'required|string|max:255',
+        'direccion' => 'required|string|max:255',
+        'telefono' => 'required|string|max:15',
+        'email' => 'required|email|unique:users,email', // ojo con el nombre de la tabla
+        'rol' => 'required|in:visor,admin',
+        'password' => 'required|string|min:8|confirmed', // asegúrate de pedir confirmación si usas `confirmed`
+    ]);
 
-        User::create($request->all());
-        return redirect()->route('usuarios.index')->with('success', 'Usuario añadido correctamente');
-    }
+    User::create([
+        'nombre' => $request->nombre,
+        'apellido' => $request->apellido,
+        'direccion' => $request->direccion,
+        'telefono' => $request->telefono,
+        'email' => $request->email,
+        'rol' => $request->rol,
+        'password' => Hash::make($request->password),
+    ]);
+
+    return redirect()->route('usuarios.index')->with('success', 'Usuario añadido correctamente');
+}
 
     public function show($id)
     {
@@ -58,8 +69,8 @@ class UserController extends Controller
             'apellido' => 'required|string|max:255',
             'direccion' => 'required|string|max:255',
             'telefono' => 'required|string|max:15',
-            'correo' => 'required|email|unique:usuarios,correo,' . $id,
-            'rol' => 'required|in:cliente,admin',
+            'email' => 'required|email|unique:usuarios,correo,' . $id,
+            'rol' => 'required|in:visor,admin',
         ]);
 
         $usuario = User::findOrFail($id);
@@ -77,7 +88,7 @@ class UserController extends Controller
     
     public function indexApi(){
         // Carga los rescatados junto con sus relaciones, si existen
-        $rescatados = Rescatados::with('rescates')->get();
+        $rescatados = User::with('rescates')->get();
 
         return response()->json($rescatados, 200); // Respuesta en formato JSON
     }

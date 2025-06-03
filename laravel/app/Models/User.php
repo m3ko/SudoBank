@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\CuentaBancaria;
+
 
 class User extends Authenticatable
 {
@@ -25,9 +28,11 @@ class User extends Authenticatable
         'apellido',
         'direccion',
         'telefono',
-        'correo',
+        'email',
         'rol',
         'password',
+        'updated_at',
+        'created_at',
     ];
     public function cuentasBancarias()
     {

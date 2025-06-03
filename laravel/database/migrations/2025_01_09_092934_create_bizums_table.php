@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('bizums', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_emisor')->constrained('users')->onDelete('cascade');
-            $table->foreignId('id_receptor')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id_emisor');
+            $table->unsignedBigInteger('id_receptor');
             $table->string('cuenta_emisor');
             $table->string('cuenta_receptor');
+            $table->decimal('monto', 10, 2); 
             $table->timestamp('fecha_hora');
             $table->timestamps();
+        
+            $table->foreign('id_emisor')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_receptor')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

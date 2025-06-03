@@ -5,6 +5,13 @@ use App\Models\Tarjeta;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
+use App\Models\CuentaBancaria;
+use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Routing\ControllerMiddlewareOptions;
+
 
 
 class TarjetaController extends Controller

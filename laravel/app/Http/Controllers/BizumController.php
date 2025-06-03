@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Viajes;
-use App\Models\Tripulantes;
-use App\Models\Medicos;
+use App\Models\Bizum;
+use App\Models\User;
+use App\Models\CuentaBancaria;
 use Illuminate\Http\RedirectResponse;
 
 class BizumController extends Controller
@@ -18,21 +18,52 @@ class BizumController extends Controller
 
     public function create()
     {
-        return view('bizums.create');
+        $users = User::with('cuentasBancarias')->get(); // Obtén usuarios con sus cuentas bancarias
+
+    // Formatear las cuentas para pasarlas al frontend
+        $cuentas = $users->mapWithKeys(function ($user) {
+            return [$user->id => $user->cuentasBancarias->map(function ($cuenta) {
+                return [
+                    'id' => $cuenta->id,
+                    'num_cuenta' => $cuenta->num_cuenta,
+                ];
+            })];
+        });
+
+    return view('bizums.create', compact('users', 'cuentas'));
     }
 
     public function store(Request $request)
     {
+        \Log::info('Datos recibidos:', $request->all());
+
         $request->validate([
-            'id_emisor' => 'required|exists:usuarios,id',
-            'id_receptor' => 'required|exists:usuarios,id|different:id_emisor',
-            'cuenta_emisor' => 'required|string|exists:cuentas_bancarias,num_cuenta',
-            'cuenta_receptor' => 'required|string|exists:cuentas_bancarias,num_cuenta',
-            'fecha_hora' => 'required|date',
+            'id_emisor' => 'required|exists:users,id',
+            'id_receptor' => 'required|exists:users,id|different:id_emisor',
+            'cuenta_emisor' => 'required|exists:cuentas_bancarias,num_cuenta',
+            'cuenta_receptor' => 'required|exists:cuentas_bancarias,num_cuenta',
+            'monto' => 'required|numeric|min:0.01',
         ]);
 
+        $cuentaEmisor = CuentaBancaria::where('num_cuenta', $request->cuenta_emisor)->first();
+        $cuentaReceptor = CuentaBancaria::where('num_cuenta', $request->cuenta_receptor)->first();
+
+        // Verificar que el emisor tenga saldo suficiente
+        if ($cuentaEmisor->saldo < $request->monto) {
+            return redirect()->back()->with('error', 'El emisor no tiene saldo suficiente para realizar el Bizum.');
+        }
+
+        // Restar saldo al emisor y sumar al receptor
+        $cuentaEmisor->saldo -= $request->monto;
+        $cuentaReceptor->saldo += $request->monto;
+
+        $cuentaEmisor->save();
+        $cuentaReceptor->save();
+
+        // Crear el Bizum
         Bizum::create($request->all());
-        return redirect()->route('bizums.index')->with('success', 'Transacción Bizum añadida correctamente');
+
+        return redirect()->route('bizums.index')->with('success', 'Bizum creado correctamente.');
     }
 
     public function show($id)
@@ -42,24 +73,62 @@ class BizumController extends Controller
     }
 
     public function edit($id)
-    {
-        $bizum = Bizum::findOrFail($id);
-        return view('bizums.edit', compact('bizum'));
-    }
+{
+    $bizum = Bizum::findOrFail($id);
+    $users = User::with('cuentasBancarias')->get(); // Obtener usuarios con sus cuentas bancarias
+
+    // Formatear las cuentas para pasarlas a la vista
+    $cuentas = $users->mapWithKeys(function ($user) {
+        return [$user->id => $user->cuentasBancarias->map(function ($cuenta) {
+            return [
+                'id' => $cuenta->id,
+                'num_cuenta' => $cuenta->num_cuenta,
+            ];
+        })];
+    });
+
+    return view('bizums.edit', compact('bizum', 'users', 'cuentas'));
+}
 
     public function update(Request $request, $id)
     {
+        \Log::info('Datos recibidos para actualizar:', $request->all());
+
         $request->validate([
-            'id_emisor' => 'required|exists:usuarios,id',
-            'id_receptor' => 'required|exists:usuarios,id|different:id_emisor',
-            'cuenta_emisor' => 'required|string|exists:cuentas_bancarias,num_cuenta',
-            'cuenta_receptor' => 'required|string|exists:cuentas_bancarias,num_cuenta',
-            'fecha_hora' => 'required|date',
+            'id_emisor' => 'required|exists:users,id',
+            'id_receptor' => 'required|exists:users,id|different:id_emisor',
+            'cuenta_emisor' => 'required|exists:cuentas_bancarias,num_cuenta',
+            'cuenta_receptor' => 'required|exists:cuentas_bancarias,num_cuenta',
+            'monto' => 'required|numeric|min:0.01',
         ]);
 
         $bizum = Bizum::findOrFail($id);
+
+        $cuentaEmisor = CuentaBancaria::where('num_cuenta', $bizum->cuenta_emisor)->first();
+        $cuentaReceptor = CuentaBancaria::where('num_cuenta', $bizum->cuenta_receptor)->first();
+
+        // Revertir el saldo del Bizum anterior
+        $cuentaEmisor->saldo += $bizum->monto;
+        $cuentaReceptor->saldo -= $bizum->monto;
+
+        $cuentaEmisor->save();
+        $cuentaReceptor->save();
+
+        // Actualizar las cuentas si cambiaron
+        $nuevaCuentaEmisor = CuentaBancaria::where('num_cuenta', $request->cuenta_emisor)->first();
+        $nuevaCuentaReceptor = CuentaBancaria::where('num_cuenta', $request->cuenta_receptor)->first();
+
+        // Aplicar el nuevo saldo
+        $nuevaCuentaEmisor->saldo -= $request->monto;
+        $nuevaCuentaReceptor->saldo += $request->monto;
+
+        $nuevaCuentaEmisor->save();
+        $nuevaCuentaReceptor->save();
+
+        // Actualizar el Bizum
         $bizum->update($request->all());
-        return redirect()->route('bizums.index')->with('success', 'Transacción Bizum actualizada correctamente');
+
+        return redirect()->route('bizums.index')->with('success', 'Bizum actualizado correctamente.');
     }
 
     public function destroy($id)
