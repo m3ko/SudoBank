@@ -8,6 +8,9 @@ use App\Models\Tarjeta;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\TransaccionBancaria;
+use App\Models\Deuda;
+use App\Models\PagoPendiente;
 
 class DatabaseSeeder extends Seeder
 {
@@ -53,16 +56,19 @@ class DatabaseSeeder extends Seeder
         $adminUser->assignRole($adminRole);
 
         // Crear 20 usuarios adicionales
-        $usuarios = User::factory(20)->create();
+        // Crear 20 usuarios adicionales
+        $usuarios = User::factory(20)->create()->each(function ($usuario, $index) use ($adminRole, $visorRole) {
+            // Generar un número de teléfono válido en el formato deseado
+            $telefono = '6' . rand(10000000, 99999999); // Número que comienza con "6" seguido de 8 dígitos
+            $usuario->update(['telefono' => $telefono]);
 
-        // Asignar roles a los usuarios
-        foreach ($usuarios as $index => $usuario) {
+            // Asignar roles a los usuarios
             if ($index % 2 === 0) {
                 $usuario->assignRole($adminRole); // Asignar rol de admin a usuarios pares
             } else {
                 $usuario->assignRole($visorRole); // Asignar rol de visor a usuarios impares
             }
-        }
+        });
 
         // Crear cuentas bancarias con IBAN único para cada usuario
         foreach ($usuarios as $usuario) {
@@ -100,6 +106,35 @@ class DatabaseSeeder extends Seeder
                 'fecha_hora' => now()->subDays(rand(0, 30))->format('Y-m-d H:i:s'), // Fecha aleatoria en los últimos 30 días
             ]);
         }
+        $cuentas = CuentaBancaria::all();
+
+        foreach ($cuentas as $cuenta) {
+            TransaccionBancaria::create([
+                'cuenta_id' => $cuenta->id,
+                'num_cuenta_destino' => $iban = $this->generarIBAN(), // Número de cuenta aleatorio
+                'concepto' => 'Factura de luz',
+                'monto' => rand(50, 200), // Monto aleatorio entre 50 y 200
+                'fecha' => now()->subDays(rand(1, 30)), // Fecha aleatoria en los últimos 30 días
+            ]);
+
+            Deuda::create([
+                'cuenta_id' => $cuenta->id,
+                'num_cuenta_destino' => $iban = $this->generarIBAN(), // Número de cuenta aleatorio
+                'concepto' => 'Factura de luz no pagada',
+                'monto' => rand(50, 200), // Monto aleatorio entre 50 y 200
+                'fecha_generacion' => now()->subDays(rand(1, 30)), // Fecha aleatoria en los últimos 30 días
+            ]);
+
+            PagoPendiente::create([
+                'cuenta_id' => $cuenta->id,
+                'num_cuenta_destino' => $iban = $this->generarIBAN(), // Número de cuenta aleatorio
+                'concepto' => 'Impuesto de vehículo',
+                'monto' => rand(100, 500), // Monto aleatorio entre 100 y 500
+                'fecha_vencimiento' => now()->addDays(rand(1, 30)), // Fecha aleatoria en los próximos 30 días
+            ]);
+        }
+
+
     }
 
     private function generarIBAN()

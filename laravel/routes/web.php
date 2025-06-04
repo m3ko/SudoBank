@@ -6,6 +6,9 @@ use App\Http\Controllers\BizumController;
 use App\Http\Controllers\TarjetaController;
 use App\Http\Controllers\CuentaBancariaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PagoPendienteController;
+use App\Http\Controllers\TransaccionBancariaController;
+use App\Http\Controllers\DeudaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,7 +50,34 @@ Route::middleware('auth')->group(function () {
     Route::get('/bizums/{bizum}/edit', [BizumController::class, 'edit'])->middleware('can:editar entidad')->name('bizums.edit');
     Route::get('/bizums/show/{bizum}', [BizumController::class, 'show'])->middleware('can:ver entidad')->name('bizums.show');
     Route::get('/bizums', [BizumController::class, 'index'])->middleware('can:ver entidad')->name('bizums.index');
-
+    // Rutas pendientes de pago
+    
+    Route::get('/pagos_pendientes/añadir', [PagoPendienteController::class, 'create'])->middleware('can:crear entidad')->name('pagos_pendientes.create');
+    Route::post('/pagos_pendientes', [PagoPendienteController::class, 'store'])->middleware('can:guardar entidad')->name('pagos_pendientes.store');
+    Route::delete('/pagos_pendientes/{pagoPendiente}', [PagoPendienteController::class, 'destroy'])->middleware('can:eliminar entidad')->name('pagos_pendientes.destroy');
+    Route::put('/pagos_pendientes/{pagoPendiente}', [PagoPendienteController::class, 'update'])->middleware('can:guardar entidad')->name('pagos_pendientes.update');
+    Route::get('/pagos_pendientes/{pagoPendiente}/edit', [PagoPendienteController::class, 'edit'])->middleware('can:editar entidad')->name('pagos_pendientes.edit');
+    Route::get('/pagos_pendientes/show/{pagoPendiente}', [PagoPendienteController::class, 'show'])->middleware('can:ver entidad')->name('pagos_pendientes.show');
+    Route::get('/pagos_pendientes', [PagoPendienteController::class, 'index'])->middleware('can:ver entidad')->name('pagos_pendientes.index');
+    
+    //Rutas transacciones bancarias
+    Route::get('/transacciones/añadir', [TransaccionBancariaController::class, 'create'])->middleware('can:crear entidad')->name('transacciones.create');
+    Route::post('/transacciones', [TransaccionBancariaController::class, 'store'])->middleware('can:guardar entidad')->name('transacciones.store');
+    Route::delete('/transacciones/{transaccion}', [TransaccionBancariaController::class, 'destroy'])->middleware('can:eliminar entidad')->name('transacciones.destroy');
+    Route::put('/transacciones/{transaccion}', [TransaccionBancariaController::class, 'update'])->middleware('can:guardar entidad')->name('transacciones.update');
+    Route::get('/transacciones/{transaccion}/edit', [TransaccionBancariaController::class, 'edit'])->middleware('can:editar entidad')->name('transacciones.edit');
+    Route::get('/transacciones/show/{transaccion}', [TransaccionBancariaController::class, 'show'])->middleware('can:ver entidad')->name('transacciones.show');
+    Route::get('/transacciones', [TransaccionBancariaController::class, 'index'])->middleware('can:ver entidad')->name('transacciones.index');
+    
+    //rutas de deudas
+    Route::get('/deudas/añadir', [DeudaController::class, 'create'])->middleware('can:crear entidad')->name('deudas.create');
+    Route::post('/deudas', [DeudaController::class, 'store'])->middleware('can:guardar entidad')->name('deudas.store');
+    Route::delete('/deudas/{deuda}', [DeudaController::class, 'destroy'])->middleware('can:eliminar entidad')->name('deudas.destroy');
+    Route::put('/deudas/{deuda}', [DeudaController::class, 'update'])->middleware('can:guardar entidad')->name('deudas.update');
+    Route::get('/deudas/{deuda}/edit', [DeudaController::class, 'edit'])->middleware('can:editar entidad')->name('deudas.edit');
+    Route::get('/deudas/show/{deuda}', [DeudaController::class, 'show'])->middleware('can:ver entidad')->name('deudas.show');
+    Route::get('/deudas', [DeudaController::class, 'index'])->middleware('can:ver entidad')->name('deudas.index');
+    
     // Dashboard
     Route::get('/dashboard', function () {
         return view('dashboard');
