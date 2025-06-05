@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 use App\Models\Deuda;
 use App\Models\CuentaBancaria;
 use Illuminate\Http\Request;
+use App\Models\TransaccionBancaria;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class DeudaController extends Controller
 {   
@@ -71,7 +75,7 @@ class DeudaController extends Controller
 
     public function pagarDeuda($id)
 {
-    $deuda = Deuda::findOrFail($id);
+   $deuda = Deuda::findOrFail($id);
     $cuenta = CuentaBancaria::findOrFail($deuda->cuenta_id);
 
     if ($cuenta->saldo >= $deuda->monto) {
@@ -90,9 +94,20 @@ class DeudaController extends Controller
         // Eliminar la deuda
         $deuda->delete();
 
-        return redirect()->route('deudas.index')->with('success', 'Deuda pagada correctamente.');
+        $mensaje = ['success' => 'Deuda pagada correctamente.'];
     } else {
-        return redirect()->route('deudas.index')->with('error', 'Saldo insuficiente para pagar la deuda.');
+        $mensaje = ['error' => 'Saldo insuficiente para pagar la deuda.'];
+    }
+
+    // Redirección según el rol
+    $user = Auth::user();
+    if ($user->role === 'visor') {
+        return redirect()->route('notificaciones.home')->with($mensaje);
+    } else if ($user->role === 'admin') {
+        return redirect()->route('deudas.index')->with($mensaje);
+    } else {
+        // Por defecto, redirigir a notificaciones
+        return redirect()->route('notificaciones.home')->with($mensaje);
     }
 }
 }

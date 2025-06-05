@@ -21,10 +21,10 @@
 		<div class="app-header-navigation">
 			<div class="tabs">
 			
-				<a href="#" class="active">
+				<a href="{{ route('home') }}" >
 					Inicio
 				</a>
-				<a href="../bizum/index.html">
+				<a href="{{ route('bizums.home') }}"class="active">
 					Bizum
 				</a>
 				<a href="../tarjetas/index.html">
@@ -45,8 +45,11 @@
   <button class="dropbtn">Menú</button>
   <div class="dropdown-content">
   <a href="../pagos/index.html">Pedir tarjeta</a>
-  <a href="../pagos/index.html">Notificaciones</a>
-  <a href="../pagos/index.html">Cerrar Sesión</a>
+  <a href="{{ route('notificaciones.home') }}">Notificaciones</a>
+  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+<a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
   </div>
 	</div>
 		</div>
@@ -83,9 +86,6 @@
 									<dd>{{ \Carbon\Carbon::parse($bizum->fecha_hora)->format('d M. Y, H:i') }}</dd>
 								</div>
 							</dl>
-							<div class="transfer-number">
-								- $ {{ number_format($bizum->monto, 2) }}
-							</div>
 						</div>
 					@empty
 						<p>No hay Bizums disponibles.</p>
@@ -109,25 +109,26 @@
 								<label for="usuario_id">Selecciona el destinatario:</label>
 								<select name="usuario_id" id="usuario_id" required>
 									<option value="" disabled selected>Elige un destinatario</option>
+									<br>
 									@foreach ($usuarios as $usuario)
 										<option value="{{ $usuario->id }}">
 											{{ $usuario->nombre }} {{ $usuario->apellido }}
 										</option>
 									@endforeach
 								</select>
-			
+								<br>
 								<!-- Selección de la cuenta bancaria -->
 								<label for="cuenta_id">Selecciona tu cuenta:</label>
-								<div>
-									@foreach ($cuentasUsuarios as $cuenta)
-										<div>
-											<input type="radio" name="cuenta_id" id="cuenta_{{ $cuenta->id }}" value="{{ $cuenta->id }}" required onchange="mostrarSaldo({{ $cuenta->id }}, {{ $cuenta->saldo }})">
-											<label for="cuenta_{{ $cuenta->id }}">
-												{{ $cuenta->num_cuenta }}
-											</label>
-										</div>
-									@endforeach
-								</div>
+									<div style="display: flex; flex-direction: column; gap: 0.5em;">
+										@foreach ($cuentasUsuarios as $cuenta)
+											<div style="display: flex; align-items: center; gap: 0.5em;">
+												<input type="radio" name="cuenta_id" id="cuenta_{{ $cuenta->id }}" value="{{ $cuenta->id }}" required onchange="mostrarSaldo({{ $cuenta->id }}, {{ $cuenta->saldo }})">
+												<label for="cuenta_{{ $cuenta->id }}" style="margin: 0;">
+													{{ $cuenta->num_cuenta }}
+												</label>
+											</div>
+										@endforeach
+									</div>
 			
 								<!-- Mostrar saldo disponible -->
 								<div id="saldo-container" style="margin-top: 10px; display: none;">
@@ -139,7 +140,8 @@
 								<input type="number" name="monto" id="monto" min="1" step="0.01" placeholder="Ingrese la cantidad" required>
 			
 								<!-- Botón para enviar -->
-								<button type="submit" class="icon-button">
+								<br><br><br>
+								<button type="submit" class="btn btn-success">
 									Enviar Bizum
 								</button>
 							</form>
@@ -151,4 +153,15 @@
 	</div>
 </div>
 </body>
-</html>
+
+
+</html><script>
+    function mostrarSaldo(cuentaId, saldo) {
+        const saldoContainer = document.getElementById('saldo-container');
+        const saldoSpan = document.getElementById('saldo');
+
+        // Mostrar el saldo y actualizar el valor
+        saldoSpan.textContent = saldo.toFixed(2);
+        saldoContainer.style.display = 'block';
+    }
+</script>

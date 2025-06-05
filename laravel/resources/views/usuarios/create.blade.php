@@ -4,30 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Añadir Cuenta Bancaria</title>
+    <title>Añadir Usuario</title>
 </head>
 <body>
-    <form action="{{ route('cuentas.store') }}" method="post">
+    <form action="{{ route('usuarios.store') }}" method="post">
         @csrf
-        <label for="usuario_id">Usuario:</label>
-        <select id="usuario_id" name="usuario_id">
-            @foreach ($usuarios as $usuario)
-                <option value="{{ $usuario->id }}" {{ old('usuario_id') == $usuario->id ? 'selected' : '' }}>
-                    {{ $usuario->nombre }} {{ $usuario->apellido }}
-                </option>
-            @endforeach
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" required><br><br>
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" value="{{ old('apellido') }}" required><br><br>
+
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" name="direccion" value="{{ old('direccion') }}" required><br><br>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" value="{{ old('telefono') }}" required><br><br>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" value="{{ old('email') }}" required><br><br>
+
+        <label for="rol">Rol:</label>
+        <select id="rol" name="rol" required>
+            <option value="">Selecciona un rol</option>
+            <option value="admin" {{ old('rol') == 'admin' ? 'selected' : '' }}>Admin</option>
+            <option value="visor" {{ old('rol') == 'visor' ? 'selected' : '' }}>Visor</option>
         </select><br><br>
 
-        <label for="saldo">Saldo:</label>
-        <input type="number" id="saldo" name="saldo" step="0.01" value="{{ old('saldo') }}"><br><br>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required><br><br>
 
-        <label for="num_cuenta">Número de Cuenta:</label>
-        <input type="text" id="num_cuenta" name="num_cuenta" value="{{ old('num_cuenta') }}"><br><br>
+        <label for="password_confirmation">Confirmar Contraseña:</label>
+        <input type="password" id="password_confirmation" name="password_confirmation" required><br><br>
 
-        <label for="tipo_moneda">Tipo de Moneda:</label>
-        <input type="text" id="tipo_moneda" name="tipo_moneda" value="{{ old('tipo_moneda') }}"><br><br>
-
-        <button type="submit">Añadir Cuenta Bancaria</button>
+        <button type="submit">Añadir Usuario</button>
     </form>
 
     <form action="{{ route('usuarios.index') }}">

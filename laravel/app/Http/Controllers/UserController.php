@@ -26,25 +26,25 @@ class UserController extends Controller
 
     
 public function store(Request $request)
-{
+{   
     $request->validate([
         'nombre' => 'required|string|max:255',
         'apellido' => 'required|string|max:255',
         'direccion' => 'required|string|max:255',
         'telefono' => 'required|string|max:15',
-        'email' => 'required|email|unique:users,email', // ojo con el nombre de la tabla
+        'email' => 'required|email|unique:users,email',
         'rol' => 'required|in:visor,admin',
-        'password' => 'required|string|min:8|confirmed', // asegúrate de pedir confirmación si usas `confirmed`
+        'password' => 'required|string|min:8|confirmed',
     ]);
 
-    User::create([
+    \App\Models\User::create([
         'nombre' => $request->nombre,
         'apellido' => $request->apellido,
         'direccion' => $request->direccion,
         'telefono' => $request->telefono,
         'email' => $request->email,
         'rol' => $request->rol,
-        'password' => Hash::make($request->password),
+        'password' => bcrypt($request->password),
     ]);
 
     return redirect()->route('usuarios.index')->with('success', 'Usuario añadido correctamente');

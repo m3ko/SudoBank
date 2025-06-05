@@ -148,23 +148,25 @@ class BizumController extends Controller
     }
 
     public function infoHome()
-    {
-        $user = Auth::user(); // Usuario autenticado
-        $usuarios = User::all(); // Obtener todos los usuarios
-        // Obtener las cuentas bancarias asociadas al usuario autenticado
-        $cuentas = CuentaBancaria::where('user_id', $user->id)->pluck('id');
-        // Obtener las cuentas bancarias de todos los usuarios
-        $cuentasUsuarios = CuentaBancaria::where('user_id', $user->id)->get();
-        // Obtener las transacciones Bizum asociadas a las cuentas bancarias del usuario
-        $bizums = Bizum::whereIn('id_emisor', $cuentas)
-            ->orWhereIn('id_receptor', $cuentas)
-            ->with(['emisor', 'receptor']) // Cargar las relaciones emisor y receptor
-            ->latest('fecha_hora') // Ordenar por fecha y hora descendente
-            ->get();
-    
-        // Pasar las transacciones Bizum a la vista
-        return view('home.bizums', compact('bizums', 'usuarios', 'cuentasUsuarios'));
-    }
+{
+    $user = Auth::user(); // Usuario autenticado
+
+    // Obtener todos los usuarios excepto el usuario autenticado
+    $usuarios = User::where('id', '!=', $user->id)->get();
+
+    // Obtener las cuentas bancarias del usuario autenticado
+    $cuentasUsuarios = CuentaBancaria::where('user_id', $user->id)->get();
+
+    // Obtener las transacciones Bizum asociadas al usuario autenticado (enviadas o recibidas)
+    $bizums = Bizum::where('id_emisor', $user->id)
+        ->orWhere('id_receptor', $user->id)
+        ->with(['emisor', 'receptor']) // Cargar las relaciones emisor y receptor
+        ->latest('fecha_hora') // Ordenar por fecha y hora descendente
+        ->get();
+
+    // Pasar las transacciones Bizum, usuarios y cuentas a la vista
+    return view('home.bizums', compact('bizums', 'usuarios', 'cuentasUsuarios'));
+}
 
     public function enviar(Request $request)
 {

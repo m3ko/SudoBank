@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 use App\Models\PagoPendiente;
 use App\Models\CuentaBancaria;
 use Illuminate\Http\Request;
+use App\Models\Deuda;
+use App\Models\TransaccionBancaria;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+
 
 class PagoPendienteController extends Controller
 {   
@@ -69,31 +75,40 @@ class PagoPendienteController extends Controller
     }
 
     public function pagarPagoPendiente($id)
-    {
-        $pagoPendiente = PagoPendiente::findOrFail($id);
-        $cuenta = CuentaBancaria::findOrFail($pagoPendiente->cuenta_id);
+{
+    $pagoPendiente = PagoPendiente::findOrFail($id);
+    $cuenta = CuentaBancaria::findOrFail($pagoPendiente->cuenta_id);
 
-        if ($cuenta->saldo >= $pagoPendiente->monto) {
-            // Crear una nueva transacción bancaria
-            TransaccionBancaria::create([
-                'cuenta_id' => $cuenta->id,
-                'num_cuenta_destino' => $pagoPendiente->num_cuenta_destino,
-                'concepto' => $pagoPendiente->concepto,
-                'monto' => $pagoPendiente->monto,
-                'fecha' => now(),
-            ]);
+    if ($cuenta->saldo >= $pagoPendiente->monto) {
+        // Crear una nueva transacción bancaria
+        TransaccionBancaria::create([
+            'cuenta_id' => $cuenta->id,
+            'num_cuenta_destino' => $pagoPendiente->num_cuenta_destino,
+            'concepto' => $pagoPendiente->concepto,
+            'monto' => $pagoPendiente->monto,
+            'fecha' => now(),
+        ]);
 
-            // Restar el monto del pago pendiente del saldo de la cuenta bancaria
-            $cuenta->update(['saldo' => $cuenta->saldo - $pagoPendiente->monto]);
+        // Restar el monto del pago pendiente del saldo de la cuenta bancaria
+        $cuenta->update(['saldo' => $cuenta->saldo - $pagoPendiente->monto]);
 
-            // Eliminar el pago pendiente
-            $pagoPendiente->delete();
+        // Eliminar el pago pendiente
+        $pagoPendiente->delete();
 
-            return redirect()->route('pagos_pendientes.index')->with('success', 'Pago pendiente realizado correctamente.');
-        } else {
-            return redirect()->route('pagos_pendientes.index')->with('error', 'Saldo insuficiente para realizar el pago.');
-        }
+        $mensaje = ['success' => 'Pago pendiente realizado correctamente.'];
+    } else {
+        $mensaje = ['error' => 'Saldo insuficiente para realizar el pago.'];
     }
+
+    $user = auth()->user();
+    if ($user->role === 'visor') {
+        return redirect()->route('notificaciones.home')->with($mensaje);
+    } else if ($user->role === 'admin') {
+        return redirect()->route('pagos_pendientes.index')->with($mensaje);
+    } else {
+        return redirect()->route('notificaciones.home')->with($mensaje);
+    }
+}
 
     public function moverPagosPendientesAVencidos()
 {

@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Routing\ControllerMiddlewareOptions;
+use Illuminate\Support\Facades\Auth;
+
+
 
 
 
@@ -82,4 +85,13 @@ class TarjetaController extends Controller
 
         return view('home.index', compact('tarjetas'));
     } 
+
+    public function tarjetaSelec($id)
+    {
+        $user = auth()->user();
+        $tarjeta = Tarjeta::findOrFail($id);
+        $cuenta = CuentaBancaria::find($tarjeta->cuenta_bancaria_id);
+
+        return view('home.tarjetaSelec', compact('user', 'tarjeta', 'cuenta'));
+    }
 }

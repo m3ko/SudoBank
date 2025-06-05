@@ -10,6 +10,8 @@ use App\Http\Controllers\PagoPendienteController;
 use App\Http\Controllers\TransaccionBancariaController;
 use App\Http\Controllers\DeudaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PagosController;
+use App\Http\Controllers\NotificacionesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,8 +20,9 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     // Rutas de inicio
     Route::get('/home', [HomeController::class, 'infoHome'])->name('home');
+    Route::get('/pagos', [PagosController::class, 'index'])->name('pagos.index');
+    Route::get('/notificaciones', [NotificacionesController::class, 'notificacionesHome'])->name('notificaciones.home');
 
-    
     // Rutas usuarios
     Route::get('/usuarios/añadir', [UserController::class, 'create'])->middleware('can:crear entidad')->name('usuarios.create');
     Route::post('/usuarios', [UserController::class, 'store'])->middleware('can:guardar entidad')->name('usuarios.store');
@@ -46,7 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tarjetas/{tarjeta}/edit', [TarjetaController::class, 'edit'])->middleware('can:editar entidad')->name('tarjetas.edit');
     Route::get('/tarjetas/show/{tarjeta}', [TarjetaController::class, 'show'])->middleware('can:ver entidad')->name('tarjetas.show');
     Route::get('/tarjetas', [TarjetaController::class, 'index'])->middleware('can:ver entidad')->name('tarjetas.index');
-
+    Route::get('/tarjeta/seleccionar/{id}', [TarjetaController::class, 'tarjetaSelec'])->name('tarjeta.seleccionar');
     // Rutas bizum
     Route::get('/bizums/añadir', [BizumController::class, 'create'])->middleware('can:crear entidad')->name('bizums.create');
     Route::post('/bizums', [BizumController::class, 'store'])->middleware('can:guardar entidad')->name('bizums.store');
@@ -84,7 +87,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/deudas/{deuda}/edit', [DeudaController::class, 'edit'])->middleware('can:editar entidad')->name('deudas.edit');
     Route::get('/deudas/show/{deuda}', [DeudaController::class, 'show'])->middleware('can:ver entidad')->name('deudas.show');
     Route::get('/deudas', [DeudaController::class, 'index'])->middleware('can:ver entidad')->name('deudas.index');
-    
+    Route::post('/deudas/pagar/{id}', [DeudaController::class, 'pagarDeuda'])->name('deudas.pagar');
+    // Rutas de pagos
+    Route::get('/pagos_pendientes', [PagoPendienteController::class, 'index'])->middleware('can:ver entidad')->name('pagos_pendientes.index');
+    Route::post('/pagos_pendientes/pagar/{id}', [PagoPendienteController::class, 'pagarPagoPendiente'])->name('pagos_pendientes.pagar');
+    Route::post('/pagos/procesar', [PagosController::class, 'procesar'])->name('pagos.procesar');
     // Dashboard
     Route::get('/dashboard', function () {
         return view('dashboard');
