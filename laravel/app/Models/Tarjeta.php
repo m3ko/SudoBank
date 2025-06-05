@@ -17,6 +17,6 @@ class Tarjeta extends Model
 
     public function cuentaBancaria()
     {
-        return $this->belongsTo(CuentaBancaria::class);
+        return $this->belongsTo(CuentaBancaria::class, 'cuenta_bancaria_id');
     }
 }

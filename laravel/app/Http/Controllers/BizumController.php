@@ -7,6 +7,8 @@ use App\Models\Bizum;
 use App\Models\User;
 use App\Models\CuentaBancaria;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class BizumController extends Controller
 {
@@ -144,6 +146,72 @@ class BizumController extends Controller
         return response()->json($viajes); // Retorna los datos en formato 
         // return Viajes::with('tripulantes')->get();
     }
+
+    public function infoHome()
+    {
+        $user = Auth::user(); // Usuario autenticado
+        $usuarios = User::all(); // Obtener todos los usuarios
+        // Obtener las cuentas bancarias asociadas al usuario autenticado
+        $cuentas = CuentaBancaria::where('user_id', $user->id)->pluck('id');
+        // Obtener las cuentas bancarias de todos los usuarios
+        $cuentasUsuarios = CuentaBancaria::where('user_id', $user->id)->get();
+        // Obtener las transacciones Bizum asociadas a las cuentas bancarias del usuario
+        $bizums = Bizum::whereIn('id_emisor', $cuentas)
+            ->orWhereIn('id_receptor', $cuentas)
+            ->with(['emisor', 'receptor']) // Cargar las relaciones emisor y receptor
+            ->latest('fecha_hora') // Ordenar por fecha y hora descendente
+            ->get();
+    
+        // Pasar las transacciones Bizum a la vista
+        return view('home.bizums', compact('bizums', 'usuarios', 'cuentasUsuarios'));
+    }
+
+    public function enviar(Request $request)
+{
+    \Log::info('Datos recibidos para enviar Bizum:', $request->all());
+
+    $request->validate([
+        'usuario_id' => 'required|exists:users,id|different:' . Auth::id(),
+        'cuenta_id' => 'required|exists:cuentas_bancarias,id',
+        'monto' => 'required|numeric|min:0.01',
+    ]);
+
+    // Obtener la cuenta emisora y verificar que pertenece al usuario autenticado
+    $cuentaEmisor = CuentaBancaria::where('id', $request->cuenta_id)
+        ->where('user_id', Auth::id())
+        ->firstOrFail();
+
+    // Obtener la cuenta receptora del usuario seleccionado
+    $cuentaReceptor = CuentaBancaria::where('user_id', $request->usuario_id)->first();
+
+    if (!$cuentaReceptor) {
+        return redirect()->back()->with('error', 'El receptor no tiene una cuenta bancaria asociada.');
+    }
+
+    // Verificar que el emisor tenga saldo suficiente
+    if ($cuentaEmisor->saldo < $request->monto) {
+        return redirect()->back()->with('error', 'No tienes saldo suficiente para realizar el Bizum.');
+    }
+
+    // Restar saldo al emisor y sumar al receptor
+    $cuentaEmisor->saldo -= $request->monto;
+    $cuentaReceptor->saldo += $request->monto;
+
+    $cuentaEmisor->save();
+    $cuentaReceptor->save();
+
+    // Crear el Bizum
+    Bizum::create([
+        'id_emisor' => Auth::id(),
+        'id_receptor' => $request->usuario_id,
+        'cuenta_emisor' => $cuentaEmisor->num_cuenta,
+        'cuenta_receptor' => $cuentaReceptor->num_cuenta,
+        'monto' => $request->monto,
+        'fecha_hora' => now(),
+    ]);
+
+    return redirect()->route('bizums.home')->with('success', 'Bizum enviado correctamente.');
+}
      
 }
 

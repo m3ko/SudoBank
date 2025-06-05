@@ -70,4 +70,16 @@ class TarjetaController extends Controller
         $tarjeta->delete();
         return redirect()->route('tarjetas.index')->with('success', 'Tarjeta eliminada correctamente');
     }
+
+    public function showTarjetas()
+    {
+        $user = Auth::user(); // Usuario autenticado
+
+        // Obtener las tarjetas asociadas a las cuentas bancarias del usuario
+        $tarjetas = Tarjeta::whereHas('cuenta', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->with('cuenta')->get();
+
+        return view('home.index', compact('tarjetas'));
+    } 
 }

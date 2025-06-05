@@ -18,7 +18,7 @@ class CuentaBancaria extends Model
 
     protected $table = 'cuentas_bancarias'; // Nombre correcto de la tabla
 
-    protected $fillable = ['user_id', 'saldo', 'num_cuenta', 'tipo_moneda'];
+    protected $fillable = ['user_id', 'saldo', 'num_cuenta', 'tipo_moneda', 'cvv', 'fecha_expiracion'];
 
     public function user()
     {
@@ -27,6 +27,6 @@ class CuentaBancaria extends Model
 
     public function tarjetas()
     {
-        return $this->hasMany(Tarjeta::class);
+        return $this->hasMany(Tarjeta::class, 'cuenta_bancaria_id');
     }
 }

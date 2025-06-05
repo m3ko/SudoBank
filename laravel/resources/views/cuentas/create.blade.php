@@ -30,6 +30,12 @@
             <option value="AUD" {{ old('tipo_moneda') == 'AUD' ? 'selected' : '' }}>AUD</option>
         </select><br><br>
 
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" maxlength="4" value="{{ old('cvv') }}"><br><br>
+
+        <label for="fecha_expiracion">Fecha de Expiración:</label>
+        <input type="date" id="fecha_expiracion" name="fecha_expiracion" value="{{ old('fecha_expiracion') }}"><br><br>
+
         <button type="submit">Añadir Cuenta Bancaria</button>
     </form>
 

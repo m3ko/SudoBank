@@ -20,5 +20,11 @@
     <label for="tipo_moneda">Tipo de Moneda:</label>
     <input type="text" name="tipo_moneda" value="{{ old('tipo_moneda', $cuenta->tipo_moneda) }}">
 
+    <label for="cvv">CVV:</label>
+    <input type="text" name="cvv" maxlength="4" value="{{ old('cvv', $cuenta->cvv) }}">
+
+    <label for="fecha_expiracion">Fecha de Expiración:</label>
+    <input type="date" name="fecha_expiracion" value="{{ old('fecha_expiracion', $cuenta->fecha_expiracion) }}">
+
     <button type="submit">Actualizar</button>
 </form>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\TransaccionBancaria;
 use App\Models\CuentaBancaria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransaccionBancariaController extends Controller
 {
@@ -66,5 +67,20 @@ class TransaccionBancariaController extends Controller
     {
         $transaccion = TransaccionBancaria::findOrFail($id);
         return view('transacciones.show', compact('transaccion'));
+    }
+
+
+    public function latestTransfers()
+    {
+        $user = Auth::user(); // Usuario autenticado
+    
+        // Obtener las cuentas bancarias asociadas al usuario autenticado
+        $cuentas = CuentaBancaria::where('user_id', $user->id)->pluck('id'); // Obtener solo los IDs de las cuentas
+        // Obtener las transacciones asociadas a las cuentas bancarias del usuario
+        $transfers = TransaccionBancaria::whereIn('cuenta_id', $cuentas)
+            ->latest('fecha') // Ordenar por fecha descendente
+            ->get();
+            
+        return view('home.index', compact('transfers'));
     }
 }

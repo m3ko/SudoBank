@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,6 +16,8 @@
                 <th>Saldo</th>
                 <th>Número de Cuenta</th>
                 <th>Tipo de Moneda</th>
+                <th>CVV</th>
+                <th>Fecha de Expiración</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -28,6 +29,8 @@
                     <td>{{ $cuenta->saldo }}</td>
                     <td>{{ $cuenta->num_cuenta }}</td>
                     <td>{{ $cuenta->tipo_moneda }}</td>
+                    <td>{{ $cuenta->cvv }}</td>
+                    <td>{{ $cuenta->fecha_expiracion }}</td>
                     <td>
                         @can('editar entidad')
                         <a href="{{ route('cuentas.edit', $cuenta->id) }}">Editar</a>
@@ -54,7 +57,8 @@
     <form action="{{ route('dashboard') }}">
         <input type="submit" value="Volver">
     </form>
-      <script>
+    
+    <script>
       @if (session('success'))
             Swal.fire({
                 icon: 'success',
@@ -72,6 +76,6 @@
                 confirmButtonText: 'Aceptar'
             });
         @endif
-        </script>
+    </script>
 </body>
 </html>

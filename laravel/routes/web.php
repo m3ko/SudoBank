@@ -9,12 +9,17 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PagoPendienteController;
 use App\Http\Controllers\TransaccionBancariaController;
 use App\Http\Controllers\DeudaController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::middleware('auth')->group(function () {
+    // Rutas de inicio
+    Route::get('/home', [HomeController::class, 'infoHome'])->name('home');
+
+    
     // Rutas usuarios
     Route::get('/usuarios/añadir', [UserController::class, 'create'])->middleware('can:crear entidad')->name('usuarios.create');
     Route::post('/usuarios', [UserController::class, 'store'])->middleware('can:guardar entidad')->name('usuarios.store');
@@ -50,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/bizums/{bizum}/edit', [BizumController::class, 'edit'])->middleware('can:editar entidad')->name('bizums.edit');
     Route::get('/bizums/show/{bizum}', [BizumController::class, 'show'])->middleware('can:ver entidad')->name('bizums.show');
     Route::get('/bizums', [BizumController::class, 'index'])->middleware('can:ver entidad')->name('bizums.index');
+    Route::get('/home/bizum', [BizumController::class, 'infoHome'])->name('bizums.home');
+    Route::post('/bizums/enviar', [BizumController::class, 'enviar'])->name('bizums.enviar');
     // Rutas pendientes de pago
     
     Route::get('/pagos_pendientes/añadir', [PagoPendienteController::class, 'create'])->middleware('can:crear entidad')->name('pagos_pendientes.create');

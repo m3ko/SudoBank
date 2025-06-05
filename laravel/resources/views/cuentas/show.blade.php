@@ -13,6 +13,8 @@
         <li>Saldo: {{ $cuenta->saldo }}</li>
         <li>Número de Cuenta: {{ $cuenta->num_cuenta }}</li>
         <li>Tipo de Moneda: {{ $cuenta->tipo_moneda }}</li>
+        <li>CVV: {{ $cuenta->cvv }}</li>
+        <li>Fecha de Expiración: {{ $cuenta->fecha_expiracion }}</li>
     </ul>
     <a href="{{ route('cuentas.index') }}">Volver al listado</a>
 </body>
